@@ -1,0 +1,9 @@
+--LI4--
+
+-Tutorial;
+-Divisão de comidas por tipos (sopas, carnes e peixe); //Vegetariano se quiserem acrescentar
+-Reconhecimento de voz;
+-Agenda (guardar refeições para uma semana); //Se possivel sem repetições de comida para uma alimentação variada
+-Mostrar todos os ingredientes e colocar um botão a perguntar se falta um ingrediente para depois mostrar o mapa a dizer onde pode comprar;
+-Pesquisa textual de qualquer coisa e mostrar todas as correspondências para essa palavra ou frase;
+-Podemos colocar um avatar para ficar mais engraçado (Opcional).
