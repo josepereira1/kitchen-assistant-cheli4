@@ -1,9 +1,33 @@
 --LI4--
 
--Tutorial;
--Divisão de comidas por tipos (sopas, carnes e peixe); //Vegetariano se quiserem acrescentar
+1-Tutorial;
+-Login e Register dos clientes;
+2-Filtros para as preferências de um utilizador (com e sem um ingrediente);
+2-Indicador/Medidor/Quantificador de preferência;
+3-Guardar informação das receitas (modo de preparação, ingredientes, informação, etc.);
+4-Caso o utilizador não tenha alguns ingredientes: Indicar os 5 SuperMercados mais próximos, indicando a distância;
+4-Caso o utilizador não entenda um passo/termo mostrar página (ou algo do género) para conseguir explicar ao utilizador esse passo/termo;
+-Divisão de comidas por tipos (sopas, carnes, peixe, vegetariano, etc.);
+-Classificação das refeições por cada cliente;
 -Reconhecimento de voz;
--Agenda (guardar refeições para uma semana); //Se possivel sem repetições de comida para uma alimentação variada
+6-Agenda (guardar refeições para uma semana); //Se possivel sem repetições de comida para uma alimentação variada
+6-Ter opção de mostrar todos os ingredientes e respetivas quantidades para a agenda realizada, criando a lista geral de compras;
+7-Guardar lista de 'cozinhados' realizados (inlcuindo tempo de preparação, dificuldades encontradas, etc.) para estatisticas futuras e preferências;
 -Mostrar todos os ingredientes e colocar um botão a perguntar se falta um ingrediente para depois mostrar o mapa a dizer onde pode comprar;
 -Pesquisa textual de qualquer coisa e mostrar todas as correspondências para essa palavra ou frase;
--Podemos colocar um avatar para ficar mais engraçado (Opcional).
+-Linguagem inicialmente em Inglês (Fundamentação: Abrange mais clientes) (Trabalho Futuro: Traduções para outras linguagens);
+-Adicionar receitas para o próprio cliente.
+
+Trabalho Futuro:
+-Incluir receitas dos clientes para depois ser colocada ao dispor de todos os clientes;
+-Fazer compras online através dos ingredientes em falta;
+-Podemos colocar um avatar para ficar mais engraçado.
+
+NOTAS (falar com o stor):
+-Saber se é preciso fazer aplicação móvel! SE SIM: Para quais dispositivos?
+-Saber se é preciso mostrar o mapa na nossa aplicação ou encaminhar para outra WebSite.
+-Guardar ingredientes de cada supermercado ou através do mapa apenas mostrar os mais próximos.
+
+FUNDAMENTAÇÃO:
+1-Ensinar aos novos clientes como utilizar a aplicação e quais as funcionalidades disponiveís.
+2-Através deste indicador conseguimos perceber o tipo de receitas que mostramos ao cliente, bem como as suas preferências.
