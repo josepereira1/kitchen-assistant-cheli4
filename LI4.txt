@@ -58,3 +58,35 @@ Capa/ContraCapa / Dedicatoria / Resumo(150 palavras); Lista de palavras chave / 
 
 
 Diferenciar bibliogragfias -> como mostrar  de onde vêm as citações como as apresentar
+
+Identidade do projeto 
+justificar viabilidade do sistema -> valor acrescentado(benefícios)
+Recursos -> o necessário para funcionar(info sobre receitas, onde obter, programadores, tarefas , quem fica com o quê (duração sequenciação atribuições (diagrama de Gant)))
+
+Maquete -> como se processa a utilização do sistema ex diagrama de sequência
+Mostrar a interface a usar
+
+Medidas de sucesso -> classificação de peça de software como avaliamos? (Quem usa ...)
+
+
+
+Diagrama de gant(duas partes -> especificação em que partes de divide(requisitos | modelação))
+
+1º duas etapas(requisitos | modelação) cada etapa tem vários passos mostrar os tempos
+Quanto custa desenvolver assistente pessoal
+Quantas pessoas...
+
+
+
+|  E    |   D   |
+| R | M |       |
+|   |   |       |
+|   |   |       |
+|   |   |       |
+-----------------
+
+
+
+
+
+
