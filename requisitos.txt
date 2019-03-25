@@ -78,6 +78,33 @@ Clientes podem aceder à pagina de cada ingrediente e consultar o seu valor nutr
 
 
 
+Requesitos do utilizador:
+
+Requesitos de Sistema:
+
+1 - É necessário guardar na base de dados receitas;
+Uma receita é constituida por: Nome, tipo, duração, modo preparação, lista de ingredientes;
+
+2 - É necessário guardar ingredientes;
+Os ingredientes são contituidos por: nome, tipo, calorias e valor nutricional;
+
+3 - É necessário guardar informação relativa a clientes;
+
+4 - Os clientes são constituidos por: nome utilizador, password utilizador, nome, idade, email, peso, altura, idade;
+
+5 - É necessário guardar agenda semanal;
+Uma agenda semanal tem as seguintes propriedades: dia de realização de 1 receita, ingredientes de todas as receitas e quantidades;
+
+6 - É também necessário guardar dados relativos à avaliação da receita por parte dos clientes (notas atribuidas);
+
+7 - É necessário guardar estatísticas relativas às preferências dos clientes (em termos de receitas) para utilizar nas sugestões futuras;
+
+
+
+
+
+
+
 
 
 
