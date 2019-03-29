@@ -1,4 +1,4 @@
---LI4--
+﻿--LI4--
 
 1-Tutorial;
 2-Filtros para as preferências de um utilizador (com e sem um ingrediente);
@@ -19,6 +19,8 @@
 -Adicionar receitas para o próprio utilizador.
 
 Trabalho Futuro:
+-Reconfirmação sobre começar receita sem ingredientes todos;
+-Verificar bateria do dispositvo para avisar que poderá não ter bateria suficiente;
 -Incluir receitas dos utilizadores para depois ser colocada ao dispor de todos os utilizadores;
 -Fazer compras online através dos ingredientes em falta;
 -Implementação de temporizadores para certificar que foram cumpridos os tempos da receita;
