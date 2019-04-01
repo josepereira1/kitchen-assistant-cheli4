@@ -24,8 +24,7 @@ Trabalho Futuro:
 -Incluir receitas dos utilizadores para depois ser colocada ao dispor de todos os utilizadores;
 -Fazer compras online através dos ingredientes em falta;
 -Implementação de temporizadores para certificar que foram cumpridos os tempos da receita;
--Podemos colocar um avatar para ficar mais engraçado;
--Download receitas quando premium.
+-Podemos colocar um avatar para ficar mais engraçado.
 
 NOTAS (falar com o stor):
 
