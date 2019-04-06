@@ -19,7 +19,8 @@ namespace speech_hello_world
         public Reconhecimento()
         {
             this.result = "";
-            this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
+            if (File.Exists("hey-chely-list.txt"))  //  verificar se o ficheiro existe
+                this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
         }
 
         /// <summary>
@@ -183,15 +184,16 @@ namespace speech_hello_world
         /// </summary>
         private void initHeyChelyList()
         {
-            this.heyChelyList = new ArrayList();      
-            System.IO.StreamReader file = new System.IO.StreamReader("hey-chely-list.txt");
-            string line;
-            while ( (line = file.ReadLine()) != null )
-            {
-                this.heyChelyList.Add(line);
-                // Console.WriteLine(line);
-            }
-            file.Close();
+            if (!File.Exists("hey-chely-list.txt")) return;  //  para garantir que o ficheiro existe, porque qualquer programador pode se esquecer de verificar
+                this.heyChelyList = new ArrayList();
+                System.IO.StreamReader file = new System.IO.StreamReader("hey-chely-list.txt");
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    this.heyChelyList.Add(line);
+                    // Console.WriteLine(line);
+                }
+                file.Close();
         }
     }
 }
