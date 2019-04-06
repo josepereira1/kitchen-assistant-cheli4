@@ -105,7 +105,7 @@ namespace speech_hello_world
                 }
             }
         }
-        public static async Task Speak(string text)
+        public async Task Speak(string text)
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
