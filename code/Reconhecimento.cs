@@ -28,6 +28,10 @@ namespace speech_hello_world
             return this.result; 
         }
 
+        public void Speak(String text) {
+        	this.
+        }
+
         /// <summary>
         /// Método utilizado para aprender novas expressões.
         /// Exemplo de uso: learnExpressions("hey_chely.txt", 10) 
@@ -105,7 +109,8 @@ namespace speech_hello_world
                 }
             }
         }
-        public async Task Speak(string text)
+
+        private static async Task SynthesisToSpeakerAsync(String text);
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
@@ -119,7 +124,7 @@ namespace speech_hello_world
                 {
                     if (result.Reason == ResultReason.SynthesizingAudioCompleted)
                     {
-                        Console.WriteLine($"Speech synthesized to speaker for text [{text}]");
+                        //Console.WriteLine($"Speech synthesized to speaker for text [{text}]");
                     }
                     else if (result.Reason == ResultReason.Canceled)
                     {
