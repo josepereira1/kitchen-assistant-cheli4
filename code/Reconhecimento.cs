@@ -105,5 +105,40 @@ namespace speech_hello_world
                 }
             }
         }
+        public static async Task Speak(string text)
+        {
+            // Creates an instance of a speech config with specified subscription key and service region.
+            // Replace with your own subscription key and service region (e.g., "westus").
+            // The default language is "en-us".
+            var config = SpeechConfig.FromSubscription("84499d48ad0646038b39623e46e12228", "westus");
+
+            // Creates a speech synthesizer using speaker as audio output.
+            using (var synthesizer = new SpeechSynthesizer(config))
+            {
+                using (var result = await synthesizer.SpeakTextAsync(text))
+                {
+                    if (result.Reason == ResultReason.SynthesizingAudioCompleted)
+                    {
+                        Console.WriteLine($"Speech synthesized to speaker for text [{text}]");
+                    }
+                    else if (result.Reason == ResultReason.Canceled)
+                    {
+                        var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
+                        Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
+
+                        if (cancellation.Reason == CancellationReason.Error)
+                        {
+                            Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
+                            Console.WriteLine($"CANCELED: ErrorDetails=[{cancellation.ErrorDetails}]");
+                            Console.WriteLine($"CANCELED: Did you update the subscription info?");
+                        }
+                    }
+                }
+
+                // This is to give some time for the speaker to finish playing back the audio
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+            }
+        }
     }
 }
