@@ -1,0 +1,92 @@
+﻿--LI4--
+
+1-Tutorial;
+2-Filtros para as preferências de um utilizador (com e sem um ingrediente);
+2-Indicador/Medidor/Quantificador de preferência; (Extra)
+3-Guardar informação das receitas (modo de preparação, ingredientes, informação, etc.);
+4-Caso o utilizador não tenha alguns ingredientes: Indicar os 5 SuperMercados mais próximos, indicando a distância;
+4-Caso o utilizador não entenda um passo/termo mostrar página (ou algo do género) para conseguir explicar ao utilizador esse passo/termo;
+6-Agenda (guardar refeições para uma semana); //Se possivel sem repetições de comida para uma alimentação variada
+6-Ter opção de mostrar todos os ingredientes e respetivas quantidades para a agenda realizada, criando a lista geral de compras;
+7-Guardar lista de 'cozinhados' realizados (inlcuindo tempo de preparação, dificuldades encontradas, etc.) para estatisticas futuras e preferências;
+-Login e Register dos utilizadores;
+-Divisão de comidas por tipos (sopas, carnes, peixe, vegetariano, etc.);
+-Classificação das refeições por cada utilizador;
+-Reconhecimento de voz;
+-Mostrar todos os ingredientes e colocar um botão a perguntar se falta um ingrediente para depois mostrar o mapa a dizer onde pode comprar;
+-Pesquisa textual de qualquer coisa e mostrar todas as correspondências para essa palavra ou frase;
+-Linguagem inicialmente em Inglês (Fundamentação: Abrange mais utilizadores) (Trabalho Futuro: Traduções para outras linguagens);
+-Adicionar receitas para o próprio utilizador.
+
+Trabalho Futuro:
+-Reconfirmação sobre começar receita sem ingredientes todos;
+-Verificar bateria do dispositvo para avisar que poderá não ter bateria suficiente;
+-Incluir receitas dos utilizadores para depois ser colocada ao dispor de todos os utilizadores;
+-Fazer compras online através dos ingredientes em falta;
+-Implementação de temporizadores para certificar que foram cumpridos os tempos da receita;
+-Podemos colocar um avatar para ficar mais engraçado.
+
+NOTAS (falar com o stor):
+
+FUNDAMENTAÇÃO:
+1-Ensinar aos novos utilizadores como utilizar a aplicação e quais as funcionalidades disponiveís.
+2-Através deste indicador conseguimos perceber o tipo de receitas que mostramos ao utilizador, bem como as suas preferências.
+3-Guardar todas as informações relevantes sobre as refeições a preparar para mostrar ao utilizador como se prepara tal refeição e quais os ingredientes que ele irá necessitar para o 'cozinhado'.
+4-Ajudar o utilizador a compreender e a realizar os seus 'cozinhados', para além disso pretendesse em caso de necessidade facultar de forma rápida locais de acesso a ingredientes em falta.
+5-Dámos uma opção básica textual ou uma opção mista (audio e visual) podendo funcionar manualmente ou por reconhecimento de voz.
+6-
+7-
+8-
+
+Possivéis frases para reconhecimento de voz:
+-'Hey CHELI' - para reconhecimento;
+-'Start' - diz o 1º passo;
+-'Go Next' ou 'Continuous' - para passar para o próximo passo;
+-'Go Previous' ou 'Go Back' - para passar para o passo anterior;
+-'Repeat' - para repetir o passo;
+//-'Go To Start' - recomeçar;
+//-'Go To End' - ir para o último passo;
+-'Go Help' - passo geral (dependendo do local onde está);
+//-'Save' - guardar o passo onde está e voltar ao menu;
+//-'Show Calendar' ou 'Show agenda' - mostrar agenda;
+//-'LogOut' - sair da aplicação.
+
+
+Escrever o relatório no tempo verbal PASSADO!
+
+
+Capa/ContraCapa / Dedicatoria / Resumo(150 palavras); Lista de palavras chave / Indica / Cap1(proposta proj) / ... / Cap4(Conclusões e trab. Futuro) / biografia
+
+
+
+Diferenciar bibliogragfias -> como mostrar  de onde vêm as citações como as apresentar
+
+Identidade do projeto 
+justificar viabilidade do sistema -> valor acrescentado(benefícios)
+Recursos -> o necessário para funcionar(info sobre receitas, onde obter, programadores, tarefas , quem fica com o quê (duração sequenciação atribuições (diagrama de Gant)))
+
+Maquete -> como se processa a utilização do sistema ex diagrama de sequência
+Mostrar a interface a usar
+
+Medidas de sucesso -> classificação de peça de software como avaliamos? (Quem usa ...)
+
+
+
+Diagrama de gant(duas partes -> especificação em que partes de divide(requisitos | modelação))
+
+1º duas etapas(requisitos | modelação) cada etapa tem vários passos mostrar os tempos
+Quanto custa desenvolver assistente pessoal
+Quantas pessoas...
+
+
+
+|  E    |   D   |
+| R | M |       |
+|   |   |       |
+|   |   |       |
+|   |   |       |
+-----------------
+
+
+
+
