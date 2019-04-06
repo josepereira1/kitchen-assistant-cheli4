@@ -19,8 +19,13 @@ namespace speech_hello_world
         public Reconhecimento()
         {
             this.result = "";
-            if (File.Exists("hey-chely-list.txt"))  //  verificar se o ficheiro existe
+            try
+            {
                 this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
+            }catch(FileNotFoundException e)
+            {
+                e.ToString();
+            }
         }
 
         /// <summary>
