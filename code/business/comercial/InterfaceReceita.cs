@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*	Nossas classes	*/
+using business.comercial.Ingrediente;
+using business.comercial.Passo;
+
 namespace business.comercial{
 	
 	interface InterfaceReceita{

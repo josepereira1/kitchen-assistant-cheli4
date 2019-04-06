@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*	Nossas classes	*/
+using business.utilizadores.Utilizador;
+using business.comercial.Filtro;
+using business.comercial.Receita;
+
 namespace data{
 	
 	interface InterfaceDAOFacade{
