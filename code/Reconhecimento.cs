@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
@@ -11,10 +13,13 @@ namespace speech_hello_world
         private static String key = "84499d48ad0646038b39623e46e12228";
         private static String region = "westus";
 
+        private ArrayList heyChelyList;
+
         /// <summary>Construtor vazio. Cria o objeto Recognition útil para reconhecimento de voz.</summary>
         public Reconhecimento()
         {
             this.result = "";
+            this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
         }
 
         /// <summary>
@@ -43,8 +48,8 @@ namespace speech_hello_world
 
         /// <summary>
         /// Método utilizado para aprender novas expressões.
-        /// Exemplo de uso: learnExpressions("hey_chely.txt", 10) 
-        /// Pede ao programador para repetir 10 vezes a expressão "hey chelly" e guarda o texto
+        /// Exemplo de uso: learnExpressions("hey-chely-list.txt", 10) 
+        /// Pede ao programador para repetir 10 vezes a expressão "hey chely" e guarda o texto
         /// reconhecido no ficheiro. 
         /// Desta forma o programador obtém as várias expressões, que podem
         /// ser diferentes, mas que no entanto correspondem a "hey chely". 
@@ -59,18 +64,34 @@ namespace speech_hello_world
             for (int i=0; i<N; i++)
             {
                 String str = this.Listen();
-                sb.Append(str).Append('\n');
+                Console.WriteLine("Can I append {0} to {1}? type y/n", str, fileName);
+                string line = Console.ReadLine();
+                if (line.Equals("y"))
+                {
+                    sb.Append('\n').Append(str);
+                    Console.WriteLine("appended...");
+                }
             }
-            this.writeOnFile(fileName, sb.ToString());
+            File.AppendAllText(fileName, sb.ToString()); // adiciona a string ao ficheiro
         }
 
         /// <summary>
-        /// Escreve a String no ficheiro.
+        /// Indica se a expressão "hey chely" foi detetada no texto.
         /// </summary>
-        /// <param name="fileName">nome do ficheiro.</param>
-        /// <param name="str">String a ser escrita.</param>
-        private void writeOnFile(String fileName, String str) {
-            System.IO.File.WriteAllText(fileName, str);
+        /// <param name="text">texto reconhecido.</param>
+        /// <returns>Retorna true caso tenha sido detatada, false caso contrário.</returns>
+        public bool IsHeyChelyExpression(String text)
+        {
+            bool res = false;
+            foreach (string expr in this.heyChelyList) // verifica se consta na lista
+            {
+                if (text.Contains(expr)) // sucesso - a expressão hey chely foi dita
+                {
+                    res = true;
+                    break;
+                }
+            }
+            return res;
         }
 
         /// <summary>
@@ -154,6 +175,23 @@ namespace speech_hello_world
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Inicializa e faz o povoamento da lista de possíveis expressão 
+        /// correspondentes a "hey chely" contidas no ficheiro "hey-chely-list.txt".
+        /// </summary>
+        private void initHeyChelyList()
+        {
+            this.heyChelyList = new ArrayList();      
+            System.IO.StreamReader file = new System.IO.StreamReader("hey-chely-list.txt");
+            string line;
+            while ( (line = file.ReadLine()) != null )
+            {
+                this.heyChelyList.Add(line);
+                // Console.WriteLine(line);
+            }
+            file.Close();
         }
     }
 }
