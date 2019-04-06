@@ -5,11 +5,14 @@
         public static void Main()
         {
             Reconhecimento rec = new Reconhecimento();
+            rec.Speak("Hello.");
+            
 
             /* escuta o programador N vezes ao dizer a expressão "hey chely" 
                e escreve no ficheiro o texto reconhecido */
+            /*
             int N = 5;
-            //rec.LearnExpressions("hey_chely.txt", N);
+            rec.LearnExpressions("hey_chely.txt", N);
 
             bool state = true;
 
@@ -25,21 +28,22 @@
 
                 switch(escolha){
                     case 1:
-                        rec.Speak("Hey, what do you want?").Wait();
+                        rec.Speak("Hey, what do you want?");
                         break;
                     case 2:
-                        rec.Speak("Let's go!").Wait();
+                        rec.Speak("Let's go!");
                         break;
                     case 3:
-                        rec.Speak("Bye Bye, see you later!").Wait();
+                        rec.Speak("Bye Bye, see you later!");
                         state = false;
                         break;
                     case 0:
-                        rec.Speak("i don't understood what you said, repeate please!").Wait();
+                        rec.Speak("i don't understood what you said, repeate please!");
                         break;
                 }
                 escolha = 0;
             }
+            */
         }
     }
 }

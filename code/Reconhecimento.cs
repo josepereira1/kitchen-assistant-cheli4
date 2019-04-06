@@ -8,6 +8,8 @@ namespace speech_hello_world
     class Reconhecimento
     {
         private String result; // variável privada para armazenamento do reconhecimento de voz
+        private static String key = "84499d48ad0646038b39623e46e12228";
+        private static String region = "westus";
 
         /// <summary>Construtor vazio. Cria o objeto Recognition útil para reconhecimento de voz.</summary>
         public Reconhecimento()
@@ -24,12 +26,19 @@ namespace speech_hello_world
             this.result = ""; // reset à variável de classe
             Console.WriteLine("listening..."); // apenas para no terminal saber que está à escuta
             this.RecognizeSpeechAsync().Wait(); // efetua o reconhecimento de voz
-            Console.WriteLine("Listened => " + this.result);
+            Console.WriteLine("listened => {0}", this.result);
             return this.result; 
         }
 
+        /// <summary>
+        /// Tranforma a String em voz, ditando em voz alta a mesma.
+        /// Com este método o programador é impedido de se esquecer 
+        /// de meter a tarefa á espera - T.Wait().
+        /// </summary>
+        /// <param name="text">texto a ser convertido em voz.</param>
         public void Speak(String text) {
-        	this.
+            Console.WriteLine("Converting => {0} <= to voice...", text);
+            Reconhecimento.SynthesisToSpeakerAsync(text).Wait();
         }
 
         /// <summary>
@@ -72,7 +81,7 @@ namespace speech_hello_world
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription("84499d48ad0646038b39623e46e12228", "westus");
+            var config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
 
             // Creates a speech recognizer.
             using (var recognizer = new SpeechRecognizer(config))
@@ -110,12 +119,17 @@ namespace speech_hello_world
             }
         }
 
-        private static async Task SynthesisToSpeakerAsync(String text);
+        /// <summary>
+        /// Tranforma a String em voz, ditando em voz alta a mesma.
+        /// </summary>
+        /// <param name="text">texto a ser convertido em voz.</param>
+        /// <returns>Retorna a tarefa de conversão de voz.</returns>
+        private static async Task SynthesisToSpeakerAsync(String text)
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
             // The default language is "en-us".
-            var config = SpeechConfig.FromSubscription("84499d48ad0646038b39623e46e12228", "westus");
+            var config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
 
             // Creates a speech synthesizer using speaker as audio output.
             using (var synthesizer = new SpeechSynthesizer(config))
@@ -139,10 +153,6 @@ namespace speech_hello_world
                         }
                     }
                 }
-
-                // This is to give some time for the speaker to finish playing back the audio
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
             }
         }
     }
