@@ -5,25 +5,10 @@
         public static void Main()
         {
             Reconhecimento rec = new Reconhecimento();
-            rec.LearnExpressions("hey-chely-list.txt", 1);
+            rec.LearnExpressions("hey-chely-list.txt", 5);
 
             /*
-            while (true)
-            {
-                string str = rec.Listen(); // escuta frase dita pelo utilziador
-                bool isChely = rec.IsHeyChelyExpression(str);
-
-                if (isChely == true) Console.WriteLine("sucesso - hey chely reconhecido...");
-                else Console.WriteLine("insucesso - NÃO foi reconhecido hey chely...");
-            }
-            */
-
-            /* escuta o programador N vezes ao dizer a expressão "hey chely" 
-               e escreve no ficheiro o texto reconhecido */
-            /*
-            int N = 5;
-            rec.LearnExpressions("hey_chely.txt", N);
-
+             
             bool state = true;
 
             while(state)

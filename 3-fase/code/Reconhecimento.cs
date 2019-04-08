@@ -10,26 +10,23 @@ namespace speech_hello_world
     class Reconhecimento
     {
         private String result; // variável privada para armazenamento do reconhecimento de voz
-        private static String key = "84499d48ad0646038b39623e46e12228";
-        private static String region = "westus";
+        private static string key = "84499d48ad0646038b39623e46e12228";
+        private static string region = "westus";
+        private static string HEY_CHELY_TXT = "hey-chely-list.txt";
 
         private ArrayList heyChelyList;
 
-        /// <summary>Construtor vazio. Cria o objeto Recognition útil para reconhecimento de voz.</summary>
+        /// <summary>Construtor vazio. Cria o objeto útil para reconhecimento de voz.</summary>
         public Reconhecimento()
         {
             this.result = "";
-            try
-            {
-                this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
-            }catch(FileNotFoundException e)
-            {
-                e.ToString();
-            }
+            this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
         }
 
         /// <summary>
-        /// Escuta uma ou mais expressões e devovle o resultado reconhecido em formato String.
+        /// Escuta uma ou mais expressões e devolve o resultado reconhecido em formato String.
+        /// Com este método o programador é impedido de se esquecer 
+        /// de meter a tarefa á espera - T.Wait().
         /// </summary>
         /// <returns>Devolve o reconhecimento de voz em formato String.</returns>
         public String Listen()
@@ -60,7 +57,7 @@ namespace speech_hello_world
         /// Desta forma o programador obtém as várias expressões, que podem
         /// ser diferentes, mas que no entanto correspondem a "hey chely". 
         /// Exmplo de output no ficheiro:
-        /// {"hey shelly", "hey shelly,", "hey shelly.", "hey kelly", "hello chelly", ...}
+        /// {"hey shelly", "a shelly", "say shelly", "hey shelly", "hey kelly", "hello chelly", ...}
         /// </summary>
         /// <param name="fileName">nome do ficheiro.</param>
         /// <param name="N">número de vezes pedido ao programador para ditar a expressão.</param>
@@ -70,8 +67,14 @@ namespace speech_hello_world
             for (int i=0; i<N; i++)
             {
                 String str = this.Listen();
-                Console.WriteLine("Can I append {0} to {1}? type y/n", str, fileName);
+
+                if ( str.EndsWith(",") || str.EndsWith(".") || str.EndsWith("!") || str.EndsWith("?") || str.EndsWith(":") )
+                    str = str.Substring(0, str.Length - 1);
+
+                Console.WriteLine("Can I append - {0} - to {1}? type y/n", str, fileName);
                 string line = Console.ReadLine();
+                
+
                 if (line.Equals("y"))
                 {
                     sb.Append('\n').Append(str);
@@ -184,21 +187,26 @@ namespace speech_hello_world
         }
 
         /// <summary>
-        /// Inicializa e faz o povoamento da lista de possíveis expressão 
-        /// correspondentes a "hey chely" contidas no ficheiro "hey-chely-list.txt".
+        /// Inicializa a lista de possíveis expressões correspondentes a "hey chely" 
+        /// e faz o povoamento da mesma caso o ficheiro "hey-chely-list.txt" exista.
         /// </summary>
+        /// <exception cref="Exception">lança uma exceção caso qualquer erro ocorra.</exception>
         private void initHeyChelyList()
         {
-            if (!File.Exists("hey-chely-list.txt")) return;  //  para garantir que o ficheiro existe, porque qualquer programador pode se esquecer de verificar
-                this.heyChelyList = new ArrayList();
-                System.IO.StreamReader file = new System.IO.StreamReader("hey-chely-list.txt");
+            this.heyChelyList = new ArrayList();
+            try {
+                StreamReader file = new StreamReader(HEY_CHELY_TXT);
                 string line;
                 while ((line = file.ReadLine()) != null)
                 {
                     this.heyChelyList.Add(line);
-                    // Console.WriteLine(line);
+                    // Console.WriteLine(line); // para debug no terminal
                 }
                 file.Close();
+            } catch(Exception e) 
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }
