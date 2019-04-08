@@ -1,0 +1,6 @@
+.DS_Store
+diagramas-use-case/*.vpp.*
+*.vpp.*
+AssistentePessoal/
+code/.vs/
+
