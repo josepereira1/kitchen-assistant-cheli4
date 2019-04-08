@@ -9,11 +9,17 @@ namespace speech_hello_world
 {
     class Reconhecimento
     {
-        private String result; // variável privada para armazenamento do reconhecimento de voz
         private static string key = "84499d48ad0646038b39623e46e12228";
         private static string region = "westus";
         private static string HEY_CHELY_TXT = "hey-chely-list.txt";
+        private static int SPEAKER_SLEEP_TIME_MILLIS = 100;
 
+        // variáveis privadas para validação e inicialização da API Microsoft Speech
+        private SpeechConfig config;
+        private SpeechSynthesizer synthesizer;
+        private SpeechRecognizer recognizer;
+
+        private String result; // variável privada para armazenamento do reconhecimento de voz
         private ArrayList heyChelyList;
 
         /// <summary>Construtor vazio. Cria o objeto útil para reconhecimento de voz.</summary>
@@ -21,6 +27,7 @@ namespace speech_hello_world
         {
             this.result = "";
             this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
+            this.initMicrosoftSpeechAPI(); 
         }
 
         /// <summary>
@@ -45,8 +52,8 @@ namespace speech_hello_world
         /// </summary>
         /// <param name="text">texto a ser convertido em voz.</param>
         public void Speak(String text) {
-            Console.WriteLine("Converting => {0} <= to voice...", text);
-            Reconhecimento.SynthesisToSpeakerAsync(text).Wait();
+            Console.WriteLine("Converting - {0} - to voice...", text);
+            this.SynthesisToSpeakerAsync(text).Wait();
         }
 
         /// <summary>
@@ -104,49 +111,51 @@ namespace speech_hello_world
         }
 
         /// <summary>
+        /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
+        /// iniciliza as variáveis de instância associadas aos mesmos.
+        /// </summary>
+        private void initMicrosoftSpeechAPI()
+        {
+            this.config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
+            this.synthesizer = new SpeechSynthesizer(this.config);
+            this.recognizer = new SpeechRecognizer(this.config);
+        }
+
+        /// <summary>
         /// Ativa o reconhecimento de voz, ficando à escuta de uma ou mais expressões.
         /// </summary>
         /// <returns>Retorna a tarefa de reconhecimento de voz.</returns>
         private async Task RecognizeSpeechAsync()
-        {
-            // Creates an instance of a speech config with specified subscription key and service region.
-            // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
+        {    
+            // Starts speech recognition, and returns after a single utterance is recognized. The end of a
+            // single utterance is determined by listening for silence at the end or until a maximum of 15
+            // seconds of audio is processed.  The task returns the recognition text as result. 
+            // Note: Since RecognizeOnceAsync() returns only a single utterance, it is suitable only for single
+            // shot recognition like command or query. 
+            // For long-running multi-utterance recognition, use StartContinuousRecognitionAsync() instead.
+            var result = await this.recognizer.RecognizeOnceAsync();
 
-            // Creates a speech recognizer.
-            using (var recognizer = new SpeechRecognizer(config))
+            if (result.Reason == ResultReason.RecognizedSpeech) // sucesso
             {
-                // Starts speech recognition, and returns after a single utterance is recognized. The end of a
-                // single utterance is determined by listening for silence at the end or until a maximum of 15
-                // seconds of audio is processed.  The task returns the recognition text as result. 
-                // Note: Since RecognizeOnceAsync() returns only a single utterance, it is suitable only for single
-                // shot recognition like command or query. 
-                // For long-running multi-utterance recognition, use StartContinuousRecognitionAsync() instead.
-                var result = await recognizer.RecognizeOnceAsync();
-
-                // Checks result.
-                if (result.Reason == ResultReason.RecognizedSpeech)
-                {
-                    String text = result.Text;
-                    this.result = text.ToLower();
-                }
-                else if (result.Reason == ResultReason.NoMatch)
-                {
-                    Console.WriteLine($"NOMATCH: Speech could not be recognized.");
-                }
-                else if (result.Reason == ResultReason.Canceled)
-                {
-                    var cancellation = CancellationDetails.FromResult(result);
-                    Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
-
-                    if (cancellation.Reason == CancellationReason.Error)
-                    {
-                        Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
-                        Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
-                        Console.WriteLine($"CANCELED: Did you update the subscription info?");
-                    }
-                }
+                String text = result.Text;
+                this.result = text.ToLower();
             }
+            else if (result.Reason == ResultReason.NoMatch)
+            {
+                Console.WriteLine($"NOMATCH: Speech could not be recognized.");
+            }
+            else if (result.Reason == ResultReason.Canceled)
+            {
+                var cancellation = CancellationDetails.FromResult(result);
+                Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
+
+                if (cancellation.Reason == CancellationReason.Error)
+                {
+                    Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
+                    Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
+                    Console.WriteLine($"CANCELED: Did you update the subscription info?");
+                }
+            }          
         }
 
         /// <summary>
@@ -154,33 +163,25 @@ namespace speech_hello_world
         /// </summary>
         /// <param name="text">texto a ser convertido em voz.</param>
         /// <returns>Retorna a tarefa de conversão de voz.</returns>
-        private static async Task SynthesisToSpeakerAsync(String text)
+        private async Task SynthesisToSpeakerAsync(String text)
         {
-            // Creates an instance of a speech config with specified subscription key and service region.
-            // Replace with your own subscription key and service region (e.g., "westus").
-            // The default language is "en-us".
-            var config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
-
-            // Creates a speech synthesizer using speaker as audio output.
-            using (var synthesizer = new SpeechSynthesizer(config))
+            using (var result = await this.synthesizer.SpeakTextAsync(text))
             {
-                using (var result = await synthesizer.SpeakTextAsync(text))
+                if (result.Reason == ResultReason.SynthesizingAudioCompleted) // sucesso
                 {
-                    if (result.Reason == ResultReason.SynthesizingAudioCompleted)
-                    {
-                        //Console.WriteLine($"Speech synthesized to speaker for text [{text}]");
-                    }
-                    else if (result.Reason == ResultReason.Canceled)
-                    {
-                        var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-                        Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
+                    // certifica-se que tem tempo para ditar a expressão
+                    System.Threading.Thread.Sleep(text.Length * SPEAKER_SLEEP_TIME_MILLIS);
+                }
+                else if (result.Reason == ResultReason.Canceled)
+                {
+                    var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
+                    Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
 
-                        if (cancellation.Reason == CancellationReason.Error)
-                        {
-                            Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
-                            Console.WriteLine($"CANCELED: ErrorDetails=[{cancellation.ErrorDetails}]");
-                            Console.WriteLine($"CANCELED: Did you update the subscription info?");
-                        }
+                    if (cancellation.Reason == CancellationReason.Error)
+                    {
+                        Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
+                        Console.WriteLine($"CANCELED: ErrorDetails=[{cancellation.ErrorDetails}]");
+                        Console.WriteLine($"CANCELED: Did you update the subscription info?");
                     }
                 }
             }
@@ -205,7 +206,11 @@ namespace speech_hello_world
                 file.Close();
             } catch(Exception e) 
             {
-                Console.WriteLine(e.StackTrace);
+                Console.Error.WriteLine(e.StackTrace);
+                Console.Error.WriteLine("\nFicheiro com expressões \"hey chely\" não encontrado, por favor crie-o usando o método LearnExpressions() da classe Reconhecimento");
+                Console.WriteLine("type enter to continue...");
+                Console.ReadLine();
+                Environment.Exit(1); // insucesso
             }
         }
     }

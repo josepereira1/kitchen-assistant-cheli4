@@ -5,10 +5,10 @@
         public static void Main()
         {
             Reconhecimento rec = new Reconhecimento();
-            rec.LearnExpressions("hey-chely-list.txt", 5);
-
-            /*
-             
+            //rec.LearnExpressions("hey-chely-list.txt", 5);
+            while (true) rec.Speak("Hello, how are you today?");
+            
+            /* 
             bool state = true;
 
             while(state)
