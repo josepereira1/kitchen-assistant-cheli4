@@ -7,7 +7,7 @@ using Microsoft.CognitiveServices.Speech;
 
 namespace cheli4.Models.Comercial
 {
-    class Reconhecimento : InterfaceReconhecimento
+    class Reconhecimento : IReconhecimento
     {
         private static string key = "84499d48ad0646038b39623e46e12228";
         private static string region = "westus";

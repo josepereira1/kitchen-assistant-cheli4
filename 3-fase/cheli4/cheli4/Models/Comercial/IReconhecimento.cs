@@ -1,6 +1,6 @@
 namespace cheli4.Models.Comercial{
 
-	interface InterfaceReconhecimento{
+	interface IReconhecimento{
 		string Listen();
         bool IsHeyChelyExpression(string text);
         bool IsVoiceCmd();

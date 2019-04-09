@@ -2,7 +2,7 @@
 
 namespace cheli4.Models.Utilizadores
 {
-    public class Utilizador : InterfaceUtilizador
+    public class Utilizador : IUtilizador
     {
         public List<string> GetPreferencias()
         {
