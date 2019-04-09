@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 /*	Nossas classes	*/
-using business.utilizadores.Utilizador;
-using business.comercial.Filtro;
-using business.comercial.Receita;
+using models.utilizadores.Utilizador;
+using models.comercial.Filtro;
+using models.comercial.Receita;
 
 namespace data{
 	

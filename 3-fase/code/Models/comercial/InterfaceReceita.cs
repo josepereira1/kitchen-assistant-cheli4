@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*	Nossas classes	*/
-using business.comercial.Ingrediente;
-using business.comercial.Passo;
+using models.comercial.Ingrediente;
+using models.comercial.Passo;
 
-namespace business.comercial{
+namespace models.comercial{
 	
 	interface InterfaceReceita{
 		public List<Ingrediente> GetIngredientes(); 

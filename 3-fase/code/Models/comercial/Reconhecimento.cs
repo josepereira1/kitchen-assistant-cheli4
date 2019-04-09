@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
-namespace speech_hello_world
+namespace models.comercial
 {
     class Reconhecimento
     {
