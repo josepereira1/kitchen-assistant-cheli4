@@ -12,3 +12,17 @@ C:\Users\Ricardo Petronilho\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Rel
 C:\Users\Ricardo Petronilho\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.RazorTargetAssemblyInfo.cache
 C:\Users\Ricardo Petronilho\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.dll
 C:\Users\Ricardo Petronilho\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.pdb
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\bin\x64\Release\netcoreapp2.1\cheli4.deps.json
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\bin\x64\Release\netcoreapp2.1\cheli4.runtimeconfig.json
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\bin\x64\Release\netcoreapp2.1\cheli4.runtimeconfig.dev.json
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\bin\x64\Release\netcoreapp2.1\cheli4.dll
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\bin\x64\Release\netcoreapp2.1\cheli4.pdb
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.csprojAssemblyReference.cache
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.csproj.CoreCompileInputs.cache
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.RazorAssemblyInfo.cache
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.RazorAssemblyInfo.cs
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.AssemblyInfoInputs.cache
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.AssemblyInfo.cs
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.RazorTargetAssemblyInfo.cache
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.dll
+C:\Users\José Pereira\Desktop\projeto-li4\3-fase\cheli4\cheli4\obj\x64\Release\netcoreapp2.1\cheli4.pdb
