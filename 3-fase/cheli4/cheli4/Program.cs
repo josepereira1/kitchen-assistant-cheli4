@@ -19,7 +19,7 @@ namespace cheli4
             //CreateWebHostBuilder(args).Build().Run();
 
             // CHAMAR AQUI AS FUNÇÕES DE TESTE
-            //ReconhecimentoTeste.MainReconhecimento();
+            ReconhecimentoTeste.MainReconhecimento();
             //new PassoTeste().MainPassoTeste();    //  ainda não acabei de testar
 
             Console.WriteLine("Press any key to continue ...\n");

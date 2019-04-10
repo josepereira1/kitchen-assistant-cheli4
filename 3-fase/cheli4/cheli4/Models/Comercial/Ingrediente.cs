@@ -2,5 +2,9 @@
 {
     public class Ingrediente
     {
+        int id;
+        string nome;
+        string tipo;
+        int calorias;
     }
 }
