@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
-namespace speech_hello_world
+namespace cheli4.Models.Comercial
 {
-    class Reconhecimento
+    class Reconhecimento : IReconhecimento
     {
         private static string key = "84499d48ad0646038b39623e46e12228";
         private static string region = "westus";
@@ -36,7 +36,7 @@ namespace speech_hello_world
         /// de meter a tarefa á espera - T.Wait().
         /// </summary>
         /// <returns>Devolve o reconhecimento de voz em formato String.</returns>
-        public String Listen()
+        public string Listen()
         {
             this.result = ""; // reset à variável de classe
             Console.WriteLine("listening..."); // apenas para no terminal saber que está à escuta
@@ -96,7 +96,7 @@ namespace speech_hello_world
         /// </summary>
         /// <param name="text">texto reconhecido.</param>
         /// <returns>Retorna true caso tenha sido detatada, false caso contrário.</returns>
-        public bool IsHeyChelyExpression(String text)
+        public bool IsHeyChelyExpression(string text)
         {
             bool res = false;
             foreach (string expr in this.heyChelyList) // verifica se consta na lista
@@ -110,11 +110,30 @@ namespace speech_hello_world
             return res;
         }
 
-        /// <summary>
-        /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
-        /// iniciliza as variáveis de instância associadas aos mesmos.
-        /// </summary>
-        private void initMicrosoftSpeechAPI()
+
+        public bool IsVoiceCmd()
+        {
+            return false;
+        }
+
+
+        public void Dictate(string mensagem)
+        {
+
+        }
+
+
+        public string GetVoiceCmds()
+        {
+            return null;
+        }
+    
+
+    /// <summary>
+    /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
+    /// iniciliza as variáveis de instância associadas aos mesmos.
+    /// </summary>
+    private void initMicrosoftSpeechAPI()
         {
             this.config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
             this.synthesizer = new SpeechSynthesizer(this.config);

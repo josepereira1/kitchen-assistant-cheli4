@@ -3,4 +3,12 @@ diagramas-use-case/*.vpp.*
 *.vpp.*
 AssistentePessoal/
 code/.vs/
+3-fase/cheli4/.vs/
+3-fase/cheli4/cheli4.sln
+3-fase/cheli4/cheli4/*
+!3-fase/cheli4/cheli4/Models
+!3-fase/cheli4/cheli4/Testes
+!3-fase/cheli4/cheli4/View
+!3-fase/cheli4/cheli4/*.txt
+!3-fase/cheli4/cheli4/*.cs
 
