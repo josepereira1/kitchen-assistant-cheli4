@@ -64,7 +64,7 @@ namespace cheli4.Models.Comercial
         /// <returns></returns>
         public string GetExpressao(int numeroExpressao)
         {
-            if (numeroExpressao >= 1 || numeroExpressao <= this.expressoes.Count)   //  verifica se o número está entre o intrevalo existente
+            if (numeroExpressao < 1 || numeroExpressao > this.expressoes.Count)   //  verifica se o número está entre o intrevalo existente
                 throw new NumeroDeExpressaoDoPassoInvalidoException(Convert.ToString(numeroExpressao));
             return this.expressoes.GetValueOrDefault(Convert.ToString(numeroExpressao));
         }

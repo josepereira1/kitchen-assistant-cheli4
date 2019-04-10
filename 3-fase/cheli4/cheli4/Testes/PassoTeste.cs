@@ -26,6 +26,7 @@ namespace cheli4.Testes
             }
             catch (NumeroDeExpressaoDoPassoInvalidoException e)
             {
+                Console.WriteLine("ENTREI NA EXCEPTION!");
                 Console.WriteLine(e.StackTrace);
             }
 
