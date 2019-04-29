@@ -17,7 +17,7 @@ namespace cheli4.Testes
 
             try
             {
-                string res = passo.GetExpressao(1);
+                string res = passo.GetExpressao(1111);
 
                 Console.WriteLine("Resultado=" + res);
 
