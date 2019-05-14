@@ -1,0 +1,38 @@
+﻿@model IEnumerable<cheli4.Models.Cliente>
+
+@{
+    ViewData["Title"] = "getClientes";
+}
+
+<h1>Dados de cada pessoa</h1>
+
+<table style="width:100%"
+
+    <tr>
+        <th>username</th>
+        <th>password</th>
+        <th>nome</th>
+        <th>email</th>
+        <th>apagado</th>
+        <th>peso</th>
+        <th>data_nasc.</th>
+        <th>idade</th>
+        <th>altura</th>
+    </tr>
+
+    @foreach (var person in Model)
+    {
+        <tr>
+            <td>@person.username</td>
+            <td>@person.password</td>
+            <td>@person.nome</td>
+            <td>@person.email</td>
+            <td>@person.apagado</td>
+            <td>@person.peso</td>
+            <td>@person.data_nascimento</td>
+            <td>@person.idade</td>
+            <td>@person.altura</td>
+        </tr>
+    }
+
+</table>
