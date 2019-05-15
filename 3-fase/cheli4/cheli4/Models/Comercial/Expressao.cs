@@ -5,15 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cheli4.Models.RecursosHumanos
+namespace cheli4.Models.Comercial
 {
-    [Table("Quiz")]
-    public class Quiz
+    [Table("Expressao")]
+    public class Expressao
     {
         [Key]
-        public int id_pergunta { get; set; }
+        public string expressao { set; get; }
 
         [Required]
-        public string pergunta { get; set; }
+        public int id_passo { set; get; }
+
+        [Required]
+        public string descricao { set; get; }
     }
 }

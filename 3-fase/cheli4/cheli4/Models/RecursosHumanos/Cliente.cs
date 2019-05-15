@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace cheli4.Models
+namespace cheli4.Models.RecursosHumanos
 {
     [Table("Cliente")]
     public class Cliente

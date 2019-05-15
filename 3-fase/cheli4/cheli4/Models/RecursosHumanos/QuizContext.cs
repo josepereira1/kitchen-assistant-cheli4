@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cheli4.Models
+namespace cheli4.Models.RecursosHumanos
 {
     public class QuizContext : DbContext
     {

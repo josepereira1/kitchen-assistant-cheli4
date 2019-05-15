@@ -1,4 +1,5 @@
 ﻿using cheli4.Models;
+using cheli4.Models.RecursosHumanos;
 using cheli4.shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -73,10 +74,12 @@ namespace cheli4.Controllers
         {
             ModelState.Remove("nome");
             ModelState.Remove("email");
+            ModelState.Remove("apagado");
 
             if (ModelState.IsValid)
             {
-                bool loginStatus = this.clienteHandling.validateCliente(cliente);
+                bool loginStatus;
+                loginStatus = this.clienteHandling.validateCliente(cliente);
 
                 if (loginStatus)
                 {

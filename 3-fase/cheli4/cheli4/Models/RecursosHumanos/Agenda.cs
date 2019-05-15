@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using cheli4.Models.Comercial;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace cheli4.Models
+namespace cheli4.Models.RecursosHumanos
 {
     public class Agenda
     {

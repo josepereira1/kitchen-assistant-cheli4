@@ -1,4 +1,5 @@
 ﻿using cheli4.Models;
+using cheli4.Models.RecursosHumanos;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -54,11 +55,12 @@ namespace cheli4.shared
 
 
         // API para o modelo ClienteReceita ----------------------------------------------------------------------------------------
-
+        /*
         public ClienteReceita getReceitas(string username)
         {
             return (ClienteReceita) this._context.clienteReceitas.Where(cr => cr.FK_username_cliente.Equals(username));
         }
+        */
 
         // API para o modelo Agenda ----------------------------------------------------------------------------------------
 

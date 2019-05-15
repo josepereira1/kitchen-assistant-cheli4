@@ -1,4 +1,5 @@
 ﻿using cheli4.Models;
+using cheli4.Models.RecursosHumanos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

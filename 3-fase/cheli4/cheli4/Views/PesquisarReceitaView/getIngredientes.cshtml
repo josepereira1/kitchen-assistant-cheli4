@@ -1,0 +1,23 @@
+﻿@model IEnumerable<cheli4.Models.Comercial.Ingrediente>
+@{
+    ViewData["Title"] = "getIngredientes";
+}
+
+<h1>Ingredientes:</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ingrediente in Model)
+        {
+            <tr>
+                <td>@ingrediente.nome</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using cheli4.Models.Comercial;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace cheli4.Models
+namespace cheli4.Models.RecursosHumanos
 {
     [Table("ClienteReceita")]
     public class ClienteReceita

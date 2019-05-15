@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using cheli4.Models.Comercial;
+using Microsoft.EntityFrameworkCore;
 
-namespace cheli4.Models
+namespace cheli4.Models.RecursosHumanos
 {
     public class ClienteContext : DbContext
     {
         public DbSet<Cliente> clientes { get; set; } // tabela Cliente 
-        public DbSet<Receita> receitas { get; set; } // tabela Receita
         
         // relcações de N para N
         public DbSet<ClienteReceita> clienteReceitas { get; set; } // tabela ClienteReceita
-        public DbSet<Receita> agenda { get; set; } // tabela Agenda
+        public DbSet<Agenda> agenda { get; set; } // tabela Agenda
 
         public ClienteContext(DbContextOptions<ClienteContext> options)
            : base(options)
