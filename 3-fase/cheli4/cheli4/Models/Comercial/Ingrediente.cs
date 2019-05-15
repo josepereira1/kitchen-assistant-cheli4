@@ -22,5 +22,7 @@ namespace cheli4.Models.Comercial
 
         [Required]
         public int calorias { set; get; }
+
+        public virtual ICollection<ReceitaIngrediente> receitasIngredientes { set; get; }
     }
 }

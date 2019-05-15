@@ -7,9 +7,9 @@ namespace cheli4.shared
 {
     public class ClienteHandling
     {
-        private readonly ClienteContext _context; // para ter acesso à BD
+        private readonly DataBaseContext _context; // para ter acesso à BD
 
-        public ClienteHandling(ClienteContext context)
+        public ClienteHandling(DataBaseContext context)
         {
             this._context = context;
         }

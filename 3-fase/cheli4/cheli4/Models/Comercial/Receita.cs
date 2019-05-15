@@ -32,7 +32,10 @@ namespace cheli4.Models.Comercial
         [Required]
         public int disponivel { set; get; }
 
-        //public virtual ICollection<ClienteReceita> clientes { set; get; }
-        //public virtual ICollection<Agenda> agenda { set; get; }
+        public virtual ICollection<ClienteReceita> ClienteReceitas { set; get; }
+        public virtual ICollection<Agenda> agenda { set; get; }
+
+        public virtual ICollection<ReceitaIngrediente> receitasIngredientes { set; get; }
+        public virtual ICollection<ReceitaPasso> receitasPassos { set; get; }
     }
 }

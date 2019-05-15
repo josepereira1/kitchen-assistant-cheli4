@@ -10,9 +10,9 @@ namespace cheli4.shared
 {
     public class QuizHandling : Controller
     {
-        private readonly QuizContext _context; // para ter acesso à BD
+        private readonly DataBaseContext _context; // para ter acesso à BD
 
-        public QuizHandling(QuizContext context)
+        public QuizHandling(DataBaseContext context)
         {
             this._context = context;
         }

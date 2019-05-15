@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace cheli4.Controllers
 {
     [Route("[controller]/[action]")]
-    public class PesquisarReceitaViewController : Controller
+    public class PreReceitaViewController : Controller
     {
         private ReceitaHandling receitaHandling;
 
-        public PesquisarReceitaViewController(DataBaseContext context)
+        public PreReceitaViewController(DataBaseContext context)
         {
             this.receitaHandling = new ReceitaHandling(context);
         }
@@ -22,8 +22,25 @@ namespace cheli4.Controllers
         public IActionResult getReceitas()
         {
             Receita[] receitas = this.receitaHandling.getReceitas();
+            //Ingrediente[] ingredientes = this.receitaHandling.getReceita("Bacalhau");
             return View(receitas);
         }
+
+        [HttpGet]
+        public IActionResult getIngredientes()
+        {
+            Ingrediente[] ingredientes = this.receitaHandling.getIngredientes().ToArray();
+            return View(ingredientes);
+        }
+
+        [HttpGet]
+        public IActionResult getReceitasIngredientes()
+        {
+            ReceitaIngrediente[] receitasIngredientes = this.receitaHandling.getReceitasIngredientes();
+            return View(receitasIngredientes);
+        }
+
+
 
 
         /*

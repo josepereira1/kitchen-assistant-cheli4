@@ -16,7 +16,7 @@ namespace cheli4.Controllers
     {
         private ClienteHandling clienteHandling;
 
-        public ClienteViewController(ClienteContext context)
+        public ClienteViewController(DataBaseContext context)
         {
             this.clienteHandling = new ClienteHandling(context);
         }
