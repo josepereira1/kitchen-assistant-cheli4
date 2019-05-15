@@ -22,9 +22,6 @@ namespace cheli4.Models.Comercial
         [Required]
         public ICollection<Expressao> expressoes { set; get; }
 
-        [Required]
-        public int receita_id { set; get; }
-
         public virtual ICollection<ReceitaPasso> receitasPassos { set; get; }
     }
 }

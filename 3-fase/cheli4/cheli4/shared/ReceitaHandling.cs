@@ -31,6 +31,19 @@ namespace cheli4.shared
             return this._context.receitasIngredientes.ToArray();
         }
 
+        public Receita getReceita(int id)
+        {
+            Receita receita = this._context.receitas.Find(id);
+            if (receita == null) return null; // para não dar erro nas proximas linhas
+
+            receita.receitasPassos = this._context.receitasPassos.Where(rp => rp.FK_id_receita == receita.id).ToList();
+            foreach(ReceitaPasso p in receita.receitasPassos)
+            {
+                p.passo = this._context.passos.Find(p.FK_id_passo);
+            }
+
+            return receita;
+        }
 
         /// <summary>
         /// Devolve os ingredientes de uma receita.

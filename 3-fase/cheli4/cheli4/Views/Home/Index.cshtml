@@ -7,5 +7,11 @@
     <a asp-controller="PreReceitaView" asp-action="getIngredientes">Listar todos os ingredientes</a>
     <p></p>
     <a asp-controller="PreReceitaView" asp-action="getReceitasIngredientes">Listar todas as ReceitasIngredientes</a>
+    <p></p>
 
+    @{
+        TempData["realizar_receita_passo"] = 0;
+        TempData["realizar_receita_id"] = 0;
+    }
+    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita">Realizar receita 0 (debug)</a>
 </div>

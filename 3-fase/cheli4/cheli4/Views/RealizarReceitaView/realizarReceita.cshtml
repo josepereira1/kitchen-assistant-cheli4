@@ -1,0 +1,46 @@
+﻿@model cheli4.Models.Comercial.Receita;
+
+@{
+    ViewData["Title"] = "realizarReceita";
+}
+
+@if (TempData["realizar_receita_fail"] != null)
+{
+    <p class="alert alert-danger">@TempData["realizar_receita_fail"]</p>
+}
+
+
+@{
+    int id = (int)TempData["realizar_receita_id"];
+    int n_passo = (int)TempData["realizar_receita_passo"];
+
+    int max = (int)Model.receitasPassos.Count();
+
+
+    if (n_passo < 0)
+    {
+        n_passo = 0;
+    }
+
+    if (n_passo > max - 1)
+    {
+        n_passo = max - 1;
+    }
+
+    <p>@Model.receitasPassos.ToList()[@n_passo].passo.descricao</p>
+    <p>Duração - @Model.receitasPassos.ToList()[@n_passo].passo.duracao minutos</p>
+
+    TempData["realizar_receita_id"] = id;
+    TempData["realizar_receita_passo"] = n_passo;
+
+    if (n_passo > 0)
+    {
+        <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_ant" class="btn btn-info">Anterior</a>
+    }
+
+    if (n_passo < max - 1)
+    {
+        <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">Próximo</a>
+    }
+
+}
