@@ -40,7 +40,7 @@ namespace cheli4.Models.RecursosHumanos
 
         public double? altura { set; get; }
 
-        public virtual ICollection<ClienteReceita> receitas { set; get; }
-        public virtual ICollection<Agenda> agenda { set; get; }
+        //public virtual ICollection<ClienteReceita> receitas { set; get; }
+        //public virtual ICollection<Agenda> agenda { set; get; }
     }
 }

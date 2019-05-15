@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using cheli4.Models.RecursosHumanos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,10 @@ namespace cheli4.Models.Comercial
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-     
+            modelBuilder.Ignore<ClienteReceita>();
+            modelBuilder.Ignore<Agenda>();
         }
 
-        public DbSet<Receita> receitas {get;set;}
-        public DbSet<Ingrediente> ingredientes { get; set; }
-        public DbSet<Passo> passos { get; set; }
+        public DbSet<Receita> receitas { get; set; }
     }
 }

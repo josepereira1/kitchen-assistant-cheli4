@@ -21,31 +21,6 @@ namespace cheli4.shared
             return _context.receitas.ToArray();
         }
 
-        public Receita getReceita(int id)
-        {
-            return _context.receitas.Find(id);        
-        }
-
-        public Ingrediente[] getIngredientes()
-        {
-            return _context.ingredientes.ToArray();
-        }
-
-        public Ingrediente getIngrediente(int id)
-        {
-            return _context.ingredientes.Find(id);
-        }
-
-        public Passo[] getPassos()
-        {
-            return _context.passos.ToArray();
-        }
-
-        public Passo getPasso(int id)
-        {
-            return _context.passos.Find(id);
-        }
-
 
        
     }

@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<cheli4.Models.Comercial.Receita>
-    @{
-    ViewData["Title"] = "getReceitas";
-    }
+@{
+ViewData["Title"] = "getReceitas";
+}
 
-    <h1>Receitas:</h1>
+<h1>Receitas:</h1>
 
-    <table class="table">
-        <tr>
-            <td>Nome</td>
-        </tr>
-        @foreach (var receita in Model)
-    {
-        <tr>
-            <td>@receita.id - @receita.nome</td>
-        </tr>
-    }
-    </table>
+<table class="table">
+    <tr>
+        <td>Nome</td>
+    </tr>
+    @foreach (var receita in Model)
+{
+    <tr>
+        <td>@receita.id - @receita.nome</td>
+    </tr>
+}
+</table>

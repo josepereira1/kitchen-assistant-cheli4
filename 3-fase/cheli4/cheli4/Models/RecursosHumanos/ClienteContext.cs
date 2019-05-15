@@ -19,7 +19,7 @@ namespace cheli4.Models.RecursosHumanos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            /*
             // ClienteReceita -------------------------------------------------------
 
             modelBuilder.Entity<ClienteReceita>()
@@ -50,6 +50,10 @@ namespace cheli4.Models.RecursosHumanos
                .HasOne(a => a.receita)
                .WithMany(r => r.agenda)
                .HasForeignKey(a => a.FK_id_receita);
+               */
+
+            modelBuilder.Ignore<Agenda>();
+            modelBuilder.Ignore<ClienteReceita>();
         }
     }
 }

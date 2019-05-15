@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using cheli4.Models.Comercial;
+using cheli4.shared;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using cheli4.Models;
-using cheli4.shared;
-using cheli4.Models.Comercial;
 
 namespace cheli4.Controllers
 {
@@ -19,22 +18,23 @@ namespace cheli4.Controllers
             this.receitaHandling = new ReceitaHandling(context);
         }
 
+        [HttpGet]
         public IActionResult getReceitas()
         {
             Receita[] receitas = this.receitaHandling.getReceitas();
             return View(receitas);
         }
 
-        public IActionResult getReceita()
+
+        /*
+        [HttpGet]
+        public IActionResult pesquisarReceita()
         {
-            Receita receita = this.receitaHandling.getReceita(1);
+            Receita receita = this.receitaHandling.getReceita("cona");
             return View(receita);
         }
 
-        
-
-
-        /*[HttpPost]
+        [HttpPost]
         public IActionResult pesquisarReceita([Bind] string nome)
         {
             if (ModelState.IsValid) {
