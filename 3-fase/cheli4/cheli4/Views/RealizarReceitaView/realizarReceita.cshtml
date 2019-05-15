@@ -9,9 +9,8 @@
     <p class="alert alert-danger">@TempData["realizar_receita_fail"]</p>
 }
 
-
-@{
-    int id = (int)TempData["realizar_receita_id"];
+else{
+    //int id = (int)TempData["realizar_receita_id"];
     int n_passo = (int)TempData["realizar_receita_passo"];
 
     int max = (int)Model.receitasPassos.Count();
@@ -30,7 +29,7 @@
     <p>@Model.receitasPassos.ToList()[@n_passo].passo.descricao</p>
     <p>Duração - @Model.receitasPassos.ToList()[@n_passo].passo.duracao minutos</p>
 
-    TempData["realizar_receita_id"] = id;
+    //TempData["realizar_receita_id"] = id;
     TempData["realizar_receita_passo"] = n_passo;
 
     if (n_passo > 0)
