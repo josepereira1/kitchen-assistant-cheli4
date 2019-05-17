@@ -14,6 +14,8 @@ namespace cheli4.Models.Comercial
         private static string NEXT_TXT = "next.txt";
         private static string BACK_TXT = "back.txt";
         private static string HELP_TXT = "help.txt";
+        private static string REPEAT_TXT = "repeat.txt";
+        private static string EXPRESSIONS_TXT = "expressions.txt";
         private static int SPEAKER_SLEEP_TIME_MILLIS = 100;
 
         // variáveis privadas para validação e inicialização da API Microsoft Speech
@@ -25,6 +27,8 @@ namespace cheli4.Models.Comercial
         private ArrayList nextList;
         private ArrayList backList;
         private ArrayList helpList;
+        private ArrayList repeatList;
+        private ArrayList expressionsList;
 
         /// <summary>Construtor vazio. Cria o objeto útil para reconhecimento de voz.</summary>
         public Reconhecimento()
@@ -119,6 +123,8 @@ namespace cheli4.Models.Comercial
             if (checkCommand(text, this.nextList)) return 0;
             else if (checkCommand(text, this.backList)) return 1;
             else if (checkCommand(text, this.helpList)) return 2;
+            else if (checkCommand(text, this.repeatList)) return 3;
+            else if (checkCommand(text, this.expressionsList)) return 4;
             else return -1;
         }
 
@@ -233,10 +239,14 @@ namespace cheli4.Models.Comercial
             this.nextList = new ArrayList();
             this.backList = new ArrayList();
             this.helpList = new ArrayList();
+            this.repeatList = new ArrayList();
+            this.expressionsList = new ArrayList();
 
             this.initCommandList(NEXT_TXT, this.nextList);
             this.initCommandList(BACK_TXT, this.backList);
             this.initCommandList(HELP_TXT, this.helpList);
+            this.initCommandList(REPEAT_TXT, this.repeatList);
+            this.initCommandList(EXPRESSIONS_TXT, this.expressionsList);
         }
     }
 }

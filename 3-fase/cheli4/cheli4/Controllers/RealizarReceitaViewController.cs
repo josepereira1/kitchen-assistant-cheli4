@@ -14,36 +14,23 @@ namespace cheli4.Controllers
     {
         private ReceitaHandling receitaHandling;
         private Reconhecimento rec;
-        //public Receita receita;
-
-        //private Thread t;
-        //private bool running;
 
         public RealizarReceitaViewController(DataBaseContext context)
         {
             this.receitaHandling = new ReceitaHandling(context);
             this.rec = new Reconhecimento();
-
-            /* this.t = new Thread(new ThreadStart(run));
-             this.running = true;
-             */
         }
 
         public IActionResult realizarReceita_ant()
         {
             TempData["realizar_receita_passo"] = (int)TempData["realizar_receita_passo"] - 1;
+
             return RedirectToAction("realizarReceita", "RealizarReceitaView");
         }
 
         public IActionResult realizarReceita_prox()
         {
             TempData["realizar_receita_passo"] = (int)TempData["realizar_receita_passo"] + 1;
-            return RedirectToAction("realizarReceita", "RealizarReceitaView");
-        }
-
-        public IActionResult realizarReceita_help()
-        {
-            //TODO 
             return RedirectToAction("realizarReceita", "RealizarReceitaView");
         }
 
@@ -59,86 +46,78 @@ namespace cheli4.Controllers
                 TempData["realizar_receita_fail"] = "id da receita não existe na base de dados";
                 return View();
             }
-            
-            //startAssistente();
+
+            if(TempData["realizar_receita_ditar_passo"] != null) //  REPEAT, NEXT ou BACK
+            {
+                int n_passo = (int)TempData["realizar_receita_passo"];
+                rec.Speak(receita.receitasPassos.ToList()[n_passo].passo.descricao);
+                TempData["realizar_receita_passo"] = n_passo;
+            }
+
+            if ((int)TempData["realizar_receita_expressions"] == 0) //  REPEAT, NEXT ou BACK
+            {
+                /*
+                int n_passo = (int)TempData["realizar_receita_passo"];
+                List<Expressao> expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
+                int n_expressao = 0;
+
+                rec.Speak("From the following expressions point me the number which you did not understand.");
+                
+                foreach (Expressao exp in expressoes)
+                {
+                    rec.Speak(n_expressao+","+exp.expressao);
+                    n_expressao++;
+                }
+                TempData["realizar_receita_passo"] = n_passo;*/
+                TempData["realizar_receita_expressions"] = 1;
+            }
+
             return View(receita);           
         }
-
-
-
-
-
-
-
-
-
-
-
 
         public IActionResult assistente()
         {
             rec.Speak("Hi, tell me!");
-            String text = rec.Listen();
+            String text;
+            try
+            {
+                text = rec.Listen();
+            }catch (Exception e)
+            {
+                rec.Speak("Could not understand, please try again!");
+                return RedirectToAction("realizarReceita", "RealizarReceitaView");
+            }
             int type = rec.commandType(text);
-            if (type == 0) return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
-            else if (type == 1) return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
+            if (type == 0)
+            {
+                TempData["realizar_receita_ditar_passo"] = true;
+                return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
+            }
+            else if (type == 1)
+            {
+                TempData["realizar_receita_ditar_passo"] = true;
+                return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
+            }
             else if (type == 2)
             {
                 TempData["realizar_receita_popup"] = true;
-                return RedirectToAction("realizarReceita_help", "RealizarReceitaView");
+                return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
-            else return View();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        public void startAssistente()
-        {
-            if (t.IsAlive) {
-                running = false;
-                t.Join();
-            }
-            running = true;
-            t = new Thread(new ThreadStart(run));
-            t.Start();
-        }
-
-
-        public void run()
-        {
-            while(running)
+            else if (type == 3)
             {
-                String str = rec.Listen();
-
-                switch (str) {
-
-                    case "go next":
-                        TempData["realizar_receita_passo"] = (int)TempData["realizar_receita_passo"] + 1;
-                        break;
-
-                    default:
-                        break;
-                }
-
+                TempData["realizar_receita_ditar_passo"] = true;
+                return RedirectToAction("realizarReceita", "RealizarReceitaView");
+            }
+            /*else if(type == 4)
+            {
+                TempData["realizar_receita_expressions"] = 0;
+                return RedirectToAction("realizarReceita", "RealizarReceitaView");
+            }*/
+            else
+            {
+                rec.Speak("Could not understand, please try again!");
+                return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
         }
-        */
     }
 }

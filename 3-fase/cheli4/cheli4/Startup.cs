@@ -25,7 +25,7 @@ namespace cheli4
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=" + petroDESKTOP + ";Database=cheli4;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=" + zeDEKTOP + ";Database=cheli4;Trusted_Connection=True;ConnectRetryCount=0";
 
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
 
