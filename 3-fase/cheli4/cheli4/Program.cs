@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using cheli4.Models.Comercial;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
-using cheli4.Testes;
 
 namespace cheli4
 {
@@ -16,14 +15,17 @@ namespace cheli4
     {
         public static void Main(string[] args)
         {
-            //CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
 
-            // CHAMAR AQUI AS FUNÇÕES DE TESTE
-            //ReconhecimentoTeste.MainReconhecimento();
-            //new PassoTeste().MainPassoTeste();    //  ainda não acabei de testar
-
-            Console.WriteLine("Press any key to continue ...\n");
-            Console.ReadLine();
+            /*
+            Reconhecimento rec = new Reconhecimento();
+            //rec.LearnExpressions("back.txt", 5);
+            while (true) {
+                String text = rec.Listen();
+                int type = rec.commandType(text);
+                Console.WriteLine(type);
+            }
+            */
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

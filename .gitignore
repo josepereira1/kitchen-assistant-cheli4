@@ -6,9 +6,13 @@ code/.vs/
 3-fase/cheli4/.vs/
 3-fase/cheli4/cheli4.sln
 3-fase/cheli4/cheli4/*
-!3-fase/cheli4/cheli4/Models
 !3-fase/cheli4/cheli4/Testes
-!3-fase/cheli4/cheli4/View
+!3-fase/cheli4/cheli4/Models
+!3-fase/cheli4/cheli4/Views
+!3-fase/cheli4/cheli4/Controllers
+!3-fase/cheli4/cheli4/shared
+!3-fase/cheli4/cheli4/wwwroot
 !3-fase/cheli4/cheli4/*.txt
 !3-fase/cheli4/cheli4/*.cs
+!3-fase/cheli4/cheli4/*.json
 

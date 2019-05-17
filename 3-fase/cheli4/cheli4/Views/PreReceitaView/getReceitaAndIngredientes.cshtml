@@ -1,0 +1,63 @@
+﻿@model cheli4.Models.Comercial.Receita;
+@{
+    ViewData["Title"] = "getReceitaAndIngredientes";
+    TempData["realizar_receita_passo"] = 0;
+    TempData["realizar_receita_id"] = Model.id;
+}
+
+<div class="container">
+    <div class="row">
+        <img src="~/imagens/@Model.nomeFoto" />
+    </div>
+</div>
+
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="~/imagens/relogio.png">  Preparação @Model.duracao min</>
+            <ul>
+                <li>Nome: @Model.nome</li>
+                <li>Tipo: @Model.tipo</li>
+                <li>Gastronomia: @Model.gastronomia</li>
+                @if (Model.disponivel == 1)
+                {
+                    <li>Disponibilidade: Disponível</li>
+                }
+                else
+                {
+                    <li>Disponibilidade: Indisponível</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>Ingredientes:</h3>
+            <table class="table">
+                @foreach (var ri in Model.receitasIngredientes)
+                {
+                    <tr>
+                        <td>@ri.ingrediente.nome - @ri.ingrediente.calorias calorias</td>
+                    </tr>
+                }
+            </table>
+            <p></p>
+            <a asp-controller="RealizarReceitaView" asp-action="realizarReceita">Começar</a>
+            <p></p>
+        </div>
+        <div class="col-sm">
+            <h4>Intruções para usar a CHELI4:</h4>
+            <ul>
+                <li>HEY CHELI - Comando de reconhecimento de isntruções;</li>
+                <li>START - Começa a ler passo atual da receita;</li>
+                <li>NEXT - Avança para o próximo passo da receita;</li>
+                <li>BACK - Recuar para o passo anterior;</li>
+            </ul>
+        </div>
+    </div>
+</div>
