@@ -41,7 +41,7 @@ else
         if (n_passo < max - 1)
         {
             <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">Próximo</a>
-            
+
         }
 
         <a asp-controller="RealizarReceitaView" asp-action="assistente" class="btn btn-info">Falar com a cheli</a>
@@ -52,4 +52,10 @@ else
         <p class="alert alert-danger">A receita não está completa!</p>
     }
 
+    if (TempData["realizar_receita_popup"] != null)
+    {
+        <script>
+            alert("NEXT - Avança para o próximo passo da receita.\nBACK - Recuar para o passo anterior.");
+        </script>
+    }
 }

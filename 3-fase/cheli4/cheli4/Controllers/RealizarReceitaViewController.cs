@@ -41,6 +41,12 @@ namespace cheli4.Controllers
             return RedirectToAction("realizarReceita", "RealizarReceitaView");
         }
 
+        public IActionResult realizarReceita_help()
+        {
+            //TODO 
+            return RedirectToAction("realizarReceita", "RealizarReceitaView");
+        }
+
         public IActionResult realizarReceita()
         {
             int id = (int)TempData["realizar_receita_id"];
@@ -71,8 +77,17 @@ namespace cheli4.Controllers
 
         public IActionResult assistente()
         {
-            rec.Speak("Hello asshole!");
-            return RedirectToAction("realizarReceita", "RealizarReceitaView");
+            rec.Speak("Hi, tell me!");
+            String text = rec.Listen();
+            int type = rec.commandType(text);
+            if (type == 0) return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
+            else if (type == 1) return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
+            else if (type == 2)
+            {
+                TempData["realizar_receita_popup"] = true;
+                return RedirectToAction("realizarReceita_help", "RealizarReceitaView");
+            }
+            else return View();
         }
 
 

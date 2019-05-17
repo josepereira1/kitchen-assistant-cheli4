@@ -11,7 +11,9 @@ namespace cheli4.Models.Comercial
     {
         private static string key = "94b604dceab14c2b87fd111b7cb78a38";
         private static string region = "westus";
-        private static string HEY_CHELY_TXT = "hey-chely-list.txt";
+        private static string NEXT_TXT = "next.txt";
+        private static string BACK_TXT = "back.txt";
+        private static string HELP_TXT = "help.txt";
         private static int SPEAKER_SLEEP_TIME_MILLIS = 100;
 
         // variáveis privadas para validação e inicialização da API Microsoft Speech
@@ -20,13 +22,15 @@ namespace cheli4.Models.Comercial
         private SpeechRecognizer recognizer;
 
         private String result; // variável privada para armazenamento do reconhecimento de voz
-        private ArrayList heyChelyList;
+        private ArrayList nextList;
+        private ArrayList backList;
+        private ArrayList helpList;
 
         /// <summary>Construtor vazio. Cria o objeto útil para reconhecimento de voz.</summary>
         public Reconhecimento()
         {
             this.result = "";
-            //this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
+            this.initCmdsList(); // inicializa a lista das possíveis expressões para cada comando
             this.initMicrosoftSpeechAPI(); 
         }
 
@@ -92,14 +96,14 @@ namespace cheli4.Models.Comercial
         }
 
         /// <summary>
-        /// Indica se a expressão "hey chely" foi detetada no texto.
+        /// Indica se a expressão foi detetada no texto, note-se que não se usa apenas o método contains(), pois a expressão pode estar lcoalizada a meio do texto.
         /// </summary>
         /// <param name="text">texto reconhecido.</param>
         /// <returns>Retorna true caso tenha sido detatada, false caso contrário.</returns>
-        public bool IsHeyChelyExpression(string text)
+        private bool checkCommand(string text, ArrayList list)
         {
             bool res = false;
-            foreach (string expr in this.heyChelyList) // verifica se consta na lista
+            foreach (string expr in list) // verifica se consta na lista
             {
                 if (text.Contains(expr)) // sucesso - a expressão hey chely foi dita
                 {
@@ -110,30 +114,20 @@ namespace cheli4.Models.Comercial
             return res;
         }
 
-
-        public bool IsVoiceCmd()
+        public int commandType(String text)
         {
-            return false;
+            if (checkCommand(text, this.nextList)) return 0;
+            else if (checkCommand(text, this.backList)) return 1;
+            else if (checkCommand(text, this.helpList)) return 2;
+            else return -1;
         }
 
 
-        public void Dictate(string mensagem)
-        {
-
-        }
-
-
-        public string GetVoiceCmds()
-        {
-            return null;
-        }
-    
-
-    /// <summary>
-    /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
-    /// iniciliza as variáveis de instância associadas aos mesmos.
-    /// </summary>
-    private void initMicrosoftSpeechAPI()
+        /// <summary>
+        /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
+        /// iniciliza as variáveis de instância associadas aos mesmos.
+        /// </summary>
+        private void initMicrosoftSpeechAPI()
         {
             this.config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
             this.synthesizer = new SpeechSynthesizer(this.config);
@@ -206,31 +200,43 @@ namespace cheli4.Models.Comercial
             }
         }
 
+        private void initCommandList(String fileName, ArrayList list)
+        {
+            try
+            {
+                StreamReader file = new StreamReader(fileName);
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    list.Add(line);
+                    // Console.WriteLine(line); // para debug no terminal
+                }
+                file.Close();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.StackTrace);
+                Console.Error.WriteLine("\nFicheiro com expressões \"" + fileName + "\" não encontrado, por favor crie-o usando o método LearnExpressions() da classe Reconhecimento");
+                Console.WriteLine("type enter to continue...");
+                Console.ReadLine();
+                Environment.Exit(1); // insucesso
+            }
+        }
+
         /// <summary>
         /// Inicializa a lista de possíveis expressões correspondentes a "hey chely" 
         /// e faz o povoamento da mesma caso o ficheiro "hey-chely-list.txt" exista.
         /// </summary>
         /// <exception cref="Exception">lança uma exceção caso qualquer erro ocorra.</exception>
-        private void initHeyChelyList()
+        private void initCmdsList()
         {
-            this.heyChelyList = new ArrayList();
-            try {
-                StreamReader file = new StreamReader(HEY_CHELY_TXT);
-                string line;
-                while ((line = file.ReadLine()) != null)
-                {
-                    this.heyChelyList.Add(line);
-                    // Console.WriteLine(line); // para debug no terminal
-                }
-                file.Close();
-            } catch(Exception e) 
-            {
-                Console.Error.WriteLine(e.StackTrace);
-                Console.Error.WriteLine("\nFicheiro com expressões \"hey chely\" não encontrado, por favor crie-o usando o método LearnExpressions() da classe Reconhecimento");
-                Console.WriteLine("type enter to continue...");
-                Console.ReadLine();
-                Environment.Exit(1); // insucesso
-            }
+            this.nextList = new ArrayList();
+            this.backList = new ArrayList();
+            this.helpList = new ArrayList();
+
+            this.initCommandList(NEXT_TXT, this.nextList);
+            this.initCommandList(BACK_TXT, this.backList);
+            this.initCommandList(HELP_TXT, this.helpList);
         }
     }
 }
