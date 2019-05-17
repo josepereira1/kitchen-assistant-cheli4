@@ -54,9 +54,10 @@ namespace cheli4.Controllers
                 TempData["realizar_receita_passo"] = n_passo;
             }
 
-            if ((int)TempData["realizar_receita_expressions"] == 0) //  REPEAT, NEXT ou BACK
+            
+            if (TempData["realizar_receita_expressions"] != null) //  REPEAT, NEXT ou BACK
             {
-                /*
+                
                 int n_passo = (int)TempData["realizar_receita_passo"];
                 List<Expressao> expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
                 int n_expressao = 0;
@@ -68,9 +69,10 @@ namespace cheli4.Controllers
                     rec.Speak(n_expressao+","+exp.expressao);
                     n_expressao++;
                 }
-                TempData["realizar_receita_passo"] = n_passo;*/
+                TempData["realizar_receita_passo"] = n_passo;
                 TempData["realizar_receita_expressions"] = 1;
             }
+            
 
             return View(receita);           
         }
@@ -108,11 +110,11 @@ namespace cheli4.Controllers
                 TempData["realizar_receita_ditar_passo"] = true;
                 return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
-            /*else if(type == 4)
+            else if(type == 4)
             {
-                TempData["realizar_receita_expressions"] = 0;
+                TempData["realizar_receita_expressions"] = true;
                 return RedirectToAction("realizarReceita", "RealizarReceitaView");
-            }*/
+            }
             else
             {
                 rec.Speak("Could not understand, please try again!");
