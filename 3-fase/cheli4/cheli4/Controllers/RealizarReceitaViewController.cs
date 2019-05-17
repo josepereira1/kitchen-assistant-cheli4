@@ -38,7 +38,6 @@ namespace cheli4.Controllers
         {
             int id = (int)TempData["realizar_receita_id"];
             Receita receita = this.receitaHandling.getReceitaAndPassos(id);
-
             TempData["realizar_receita_id"] = id;
 
             if (receita == null)
@@ -47,7 +46,7 @@ namespace cheli4.Controllers
                 return View();
             }
 
-            if(TempData["realizar_receita_ditar_passo"] != null) //  REPEAT, NEXT ou BACK
+            if(TempData["ditar_passo"] != null) //  REPEAT, NEXT ou BACK
             {
                 int n_passo = (int)TempData["realizar_receita_passo"];
                 rec.Speak(receita.receitasPassos.ToList()[n_passo].passo.descricao);
@@ -55,22 +54,28 @@ namespace cheli4.Controllers
             }
 
             
-            if (TempData["realizar_receita_expressions"] != null) //  REPEAT, NEXT ou BACK
+            if (TempData["expressions"] != null) //  REPEAT, NEXT ou BACK
             {
                 
                 int n_passo = (int)TempData["realizar_receita_passo"];
                 List<Expressao> expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
+                TempData["realizar_receita_passo"] = n_passo;
+
+                if (expressoes.Count() == 0)
+                {
+                    rec.Speak("There are no expressions for this step!");
+                    return View(receita);
+                }
+
                 int n_expressao = 0;
 
                 rec.Speak("From the following expressions point me the number which you did not understand.");
                 
                 foreach (Expressao exp in expressoes)
                 {
-                    rec.Speak(n_expressao+","+exp.expressao);
+                    rec.Speak(n_expressao + " - " + exp.expressao);
                     n_expressao++;
                 }
-                TempData["realizar_receita_passo"] = n_passo;
-                TempData["realizar_receita_expressions"] = 1;
             }
             
 
@@ -92,27 +97,27 @@ namespace cheli4.Controllers
             int type = rec.commandType(text);
             if (type == 0)
             {
-                TempData["realizar_receita_ditar_passo"] = true;
+                TempData["ditar_passo"] = true;
                 return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
             }
             else if (type == 1)
             {
-                TempData["realizar_receita_ditar_passo"] = true;
+                TempData["ditar_passo"] = true;
                 return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
             }
             else if (type == 2)
             {
-                TempData["realizar_receita_popup"] = true;
+                TempData["popup"] = true;
                 return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
             else if (type == 3)
             {
-                TempData["realizar_receita_ditar_passo"] = true;
+                TempData["ditar_passo"] = true;
                 return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
             else if(type == 4)
             {
-                TempData["realizar_receita_expressions"] = true;
+                TempData["expressions"] = true;
                 return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
             else

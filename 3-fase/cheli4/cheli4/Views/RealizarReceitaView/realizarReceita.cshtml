@@ -12,6 +12,7 @@
 else
 {
     int n_passo = (int)TempData["realizar_receita_passo"];
+    TempData["realizar_receita_passo"] = n_passo;
 
     int max = Model.receitasPassos.Count();
 
@@ -30,8 +31,6 @@ else
 
         <p>@Model.receitasPassos.ToList()[n_passo].passo.descricao</p>
         <p>Duração - @Model.receitasPassos.ToList()[n_passo].passo.duracao minutos</p>
-
-        TempData["realizar_receita_passo"] = n_passo;
 
         if (n_passo > 0)
         {
@@ -52,7 +51,7 @@ else
         <p class="alert alert-danger">A receita não está completa!</p>
     }
 
-    if (TempData["realizar_receita_popup"] != null)
+    if (TempData["popup"] != null)
     {
         <script>
             alert("NEXT - Avança para o próximo passo da receita.\nBACK - Recuar para o passo anterior.");
