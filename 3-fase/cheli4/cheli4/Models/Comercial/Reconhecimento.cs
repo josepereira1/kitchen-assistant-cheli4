@@ -9,7 +9,7 @@ namespace cheli4.Models.Comercial
 {
     class Reconhecimento
     {
-        private static string key = "84499d48ad0646038b39623e46e12228";
+        private static string key = "94b604dceab14c2b87fd111b7cb78a38";
         private static string region = "westus";
         private static string HEY_CHELY_TXT = "hey-chely-list.txt";
         private static int SPEAKER_SLEEP_TIME_MILLIS = 100;
@@ -26,7 +26,7 @@ namespace cheli4.Models.Comercial
         public Reconhecimento()
         {
             this.result = "";
-            this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
+            //this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
             this.initMicrosoftSpeechAPI(); 
         }
 

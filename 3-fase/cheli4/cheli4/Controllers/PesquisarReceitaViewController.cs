@@ -19,35 +19,35 @@ namespace cheli4.Controllers
         }
 
         [HttpGet]
-        public IActionResult getReceitas()
-        {
-            Receita[] receitas = this.receitaHandling.getReceitas();
-            return View(receitas);
-        }
-
-
-        /*
-        [HttpGet]
         public IActionResult pesquisarReceita()
         {
-            Receita receita = this.receitaHandling.getReceita("cona");
-            return View(receita);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult pesquisarReceita([Bind] string nome)
+        public IActionResult pesquisarReceita(string nome)
         {
             if (ModelState.IsValid) {
-                Receita receita = this.receitaHandling.getReceita(nome);
-                if (receita != null) {
-                    TempData["Sucesso"] = "Encontrou receita!";
+                Receita r = this.receitaHandling.getReceita(nome);
+
+                if (r != null) {
+                    //TempData["Sucesso"] = "Encontrou receita!";
                     ModelState.Clear();
-                    return View(receita);
+                    TempData["pre_receita_nome"] = nome;
+                    return RedirectToAction("getReceitaAndIngredientes", "PreReceitaView");
                 } else{
-                    TempData["Fail"] = "Não existe receita com este id!";
+                    TempData["Fail"] = "Não existe receita com este nome! Tente novamente";
                 }
             }
             return View();
-        }*/
+        }
+
+        [HttpGet]
+        public IActionResult pesquisarReceitaPorFiltro()
+        {
+            return View();
+        }
+
+
     }
 }

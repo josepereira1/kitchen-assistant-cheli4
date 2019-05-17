@@ -32,6 +32,9 @@ namespace cheli4.Models.Comercial
         [Required]
         public int disponivel { set; get; }
 
+        [Required]
+        public string nomeFoto { set; get; }
+
         public virtual ICollection<ClienteReceita> ClienteReceitas { set; get; }
         public virtual ICollection<Agenda> agenda { set; get; }
 
