@@ -19,13 +19,14 @@ namespace cheli4
     {
 
         String petroDESKTOP = "DESKTOP-ROCLB6Q";
-        String zeDEKTOP = "DESKTOP-IH6ARM1";
+        String zeDESKTOP = "DESKTOP-IH6ARM1";
+        String marquinhosDESKTOP = "DESKTOP-JD99DBI";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=" + petroDESKTOP + ";Database=cheli4;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=" + marquinhosDESKTOP + ";Database=cheli4;Trusted_Connection=True;ConnectRetryCount=0";
 
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
 
