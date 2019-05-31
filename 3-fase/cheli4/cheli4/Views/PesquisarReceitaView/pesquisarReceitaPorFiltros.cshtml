@@ -1,0 +1,58 @@
+﻿@model List<cheli4.Models.Comercial.Receita>;
+
+@{
+    ViewData["Title"] = "pesquisarReceitaPorFiltros";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <form asp-action="pesquisarReceitaPorFiltros">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row" style="width:100%">
+                    <h6>Filtros:</h6>
+                    <br />
+                    <ul>
+                        <li><input type="checkbox" name="YourCheckBoxes" value="carne"> Carne</li>
+                        <li><input type="checkbox" name="YourCheckBoxes" value="peixe"> Peixe</li>
+                        <li><input type="checkbox" name="YourCheckBoxes" value="carne"> Vegetariano</li>
+                        <li><input type="checkbox" name="YourCheckBoxes" value="peixe"> Vegan</li>
+                        <li><input type="checkbox" name="YourCheckBoxes" value="carne"> Sobremesas</li>
+                        <li><input type="checkbox" name="YourCheckBoxes" value="peixe"> Saladas</li>
+                    </ul>
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Pesquisar por filtros" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            @if (TempData["Filtrar"] != null)
+            {
+
+                @foreach (var receita in @Model)
+                {
+                    <br /><br />
+                    <ul>
+                        <li>Nome da receita: @receita.nome</li>
+                        <li>Duração: @receita.duracao min</li>
+                    </ul>
+                    <div class="container">
+                        <div class="row">
+                            <img src="~/imagens/@receita.nomeFotoMiniatura" />
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+
+    </div>
+</div>
+

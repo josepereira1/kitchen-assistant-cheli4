@@ -54,6 +54,14 @@ namespace cheli4.shared
             return receita;
         }
 
+        public List<Receita> getReceitasPorTipo(string tipo)
+        {
+            List<Receita> receitas = this._context.receitas.Where(r => r.tipo == tipo).ToList();
+
+            if (receitas.Count == 0) return null;
+            else return receitas;
+        }
+
         public Receita getReceitaAndIngredientes(string nome)
         {
             List<Receita> receitas = this._context.receitas.Where(r => r.nome == nome).ToList();

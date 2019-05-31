@@ -21,8 +21,9 @@ namespace cheli4.Controllers
         [HttpGet]
         public IActionResult getReceitaAndIngredientes()
         {
-            string nome = TempData["pre_receita_nome"].ToString();
+            string nome = TempData["PRN"].ToString();
             Receita r = this.receitaHandling.getReceitaAndIngredientes(nome);
+            TempData["PRN"] = nome; //  isto é para caso a pessoa atualize a página!!!
             return View(r);
         }
     }

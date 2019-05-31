@@ -19,13 +19,13 @@ namespace cheli4.Controllers
         }
 
         [HttpGet]
-        public IActionResult pesquisarReceita()
+        public IActionResult pesquisarReceitaPorNome()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult pesquisarReceita(string nome)
+        public IActionResult pesquisarReceitaPorNome(string nome)
         {
             if (ModelState.IsValid) {
                 Receita r = this.receitaHandling.getReceita(nome);
@@ -33,7 +33,7 @@ namespace cheli4.Controllers
                 if (r != null) {
                     //TempData["Sucesso"] = "Encontrou receita!";
                     ModelState.Clear();
-                    TempData["pre_receita_nome"] = nome;
+                    TempData["PRN"] = nome;
                     return RedirectToAction("getReceitaAndIngredientes", "PreReceitaView");
                 } else{
                     TempData["Fail"] = "Não existe receita com este nome! Tente novamente";
@@ -43,9 +43,23 @@ namespace cheli4.Controllers
         }
 
         [HttpGet]
-        public IActionResult pesquisarReceitaPorFiltro()
+        public IActionResult pesquisarReceitaPorFiltros()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult pesquisarReceitaPorFiltros(string[] YourCheckboxes)
+        {
+            List<Receita> receitas = new List<Receita>();
+            TempData["Filtrar"] = "Sim";
+            foreach (string tipo in YourCheckboxes)
+            {
+                List<Receita> receitasDesteTipo = this.receitaHandling.getReceitasPorTipo(tipo);
+                if(receitasDesteTipo.Count != 0)foreach(var r in receitasDesteTipo)if(!receitas.Contains(r))receitas.Add(r);
+            }
+
+            return View(receitas);
         }
 
 

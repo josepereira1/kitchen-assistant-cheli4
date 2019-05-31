@@ -1,0 +1,26 @@
+﻿@model cheli4.Models.Comercial.Receita;
+@{
+    ViewData["Title"] = "pesquisarReceitaPorNome";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @if (TempData["Fail"] != null)
+        {
+            <p class="alert alert-danger">@TempData["Fail"]</p>
+        }
+            <form asp-action="pesquisarReceitaPorNome">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="nome" class="control-label">Introduza o nome da receita a procurar:</label>
+                    <input asp-for="nome" class="form-control" />
+                    <span asp-validation-for="nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Pesquisar por nome" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+
+    </div>
+</div>
+

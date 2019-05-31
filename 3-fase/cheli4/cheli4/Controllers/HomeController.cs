@@ -11,7 +11,7 @@ namespace cheli4.Controllers
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated == false) return RedirectToAction("login", "ClienteView");
-            else return RedirectToAction("pesquisarReceita", "PesquisarReceitaView");
+            else return RedirectToAction("pesquisarReceitaPorNome", "PesquisarReceitaView");
         }
     }
 }
