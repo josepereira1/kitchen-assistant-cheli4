@@ -14,6 +14,7 @@ namespace cheli4.Controllers
     {
         private ReceitaHandling receitaHandling;
         private Reconhecimento rec;
+        private String passo;
 
         public RealizarReceitaViewController(DataBaseContext context)
         {
@@ -36,6 +37,9 @@ namespace cheli4.Controllers
 
         public IActionResult realizarReceita()
         {
+
+            Thread t = null;
+
             int id = (int)TempData["realizar_receita_id"];
             Receita receita = this.receitaHandling.getReceitaAndPassos(id);
             TempData["realizar_receita_id"] = id;
@@ -49,12 +53,13 @@ namespace cheli4.Controllers
             if(TempData["ditar_passo"] != null) //  REPEAT, NEXT ou BACK
             {
                 int n_passo = (int)TempData["realizar_receita_passo"];
-                rec.Speak(receita.receitasPassos.ToList()[n_passo].passo.descricao);
+                this.passo = receita.receitasPassos.ToList()[n_passo].passo.descricao;
+                t = new Thread(run);
                 TempData["realizar_receita_passo"] = n_passo;
             }
 
             
-            if (TempData["expressions"] != null) //  REPEAT, NEXT ou BACK
+            if (TempData["expressions"] != null) // EXPRESIONS
             {
                 
                 int n_passo = (int)TempData["realizar_receita_passo"];
@@ -77,54 +82,69 @@ namespace cheli4.Controllers
                     n_expressao++;
                 }
             }
-            
 
+            if (t != null) t.Start();
             return View(receita);           
         }
 
         public IActionResult assistente()
         {
-            rec.Speak("Hi, tell me!");
-            String text;
             try
             {
-                text = rec.Listen();
-            }catch (Exception e)
+                String text;
+                rec.Speak("Hi, tell me!");
+                try
+                {
+                    text = rec.Listen();
+                }
+                catch (Exception e)
+                {
+                    rec.Speak("Could not understand, please try again!");
+                    return RedirectToAction("realizarReceita", "RealizarReceitaView");
+                }
+                int type = rec.commandType(text);
+                if (type == 0)
+                {
+                    TempData["ditar_passo"] = true;
+                    return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
+                }
+                else if (type == 1)
+                {
+                    TempData["ditar_passo"] = true;
+                    return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
+                }
+                else if (type == 2)
+                {
+                    TempData["popup"] = true;
+                    return RedirectToAction("realizarReceita", "RealizarReceitaView");
+                }
+                else if (type == 3)
+                {
+                    TempData["ditar_passo"] = true;
+                    return RedirectToAction("realizarReceita", "RealizarReceitaView");
+                }
+                else if (type == 4)
+                {
+                    TempData["expressions"] = true;
+                    return RedirectToAction("realizarReceita", "RealizarReceitaView");
+                }
+                else
+                {
+                    rec.Speak("Could not understand, please try again!");
+                    return RedirectToAction("realizarReceita", "RealizarReceitaView");
+                }
+            }
+
+            catch (Exception e)
             {
-                rec.Speak("Could not understand, please try again!");
+                Console.WriteLine(e.StackTrace);
                 return RedirectToAction("realizarReceita", "RealizarReceitaView");
             }
-            int type = rec.commandType(text);
-            if (type == 0)
-            {
-                TempData["ditar_passo"] = true;
-                return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
-            }
-            else if (type == 1)
-            {
-                TempData["ditar_passo"] = true;
-                return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
-            }
-            else if (type == 2)
-            {
-                TempData["popup"] = true;
-                return RedirectToAction("realizarReceita", "RealizarReceitaView");
-            }
-            else if (type == 3)
-            {
-                TempData["ditar_passo"] = true;
-                return RedirectToAction("realizarReceita", "RealizarReceitaView");
-            }
-            else if(type == 4)
-            {
-                TempData["expressions"] = true;
-                return RedirectToAction("realizarReceita", "RealizarReceitaView");
-            }
-            else
-            {
-                rec.Speak("Could not understand, please try again!");
-                return RedirectToAction("realizarReceita", "RealizarReceitaView");
-            }
+        }
+
+        private void run()
+        {
+            rec.Speak(passo);
         }
     }
 }

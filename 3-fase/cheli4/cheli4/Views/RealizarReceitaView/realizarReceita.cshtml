@@ -48,7 +48,7 @@ else
 
                 @if (n_passo < max - 1)
                 {
-                    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">NEXT</a>
+                    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">Next</a>
 
                 }
 
@@ -65,7 +65,7 @@ else
     if (TempData["popup"] != null)
     {
         <script>
-            alert("NEXT - Avança para o próximo passo da receita.\nBACK - Recuar para o passo anterior.");
+            alert("NEXT - Proceeds to next recipe step.\nBACK - Go back to the previous step.\nHELP - Explain cheli4 commands.\nREPEAT - Repeat current step.");
         </script>
     }
 }
