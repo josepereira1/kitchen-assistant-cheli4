@@ -17,7 +17,7 @@ namespace cheli4.Models.Comercial
         private static string HELP_TXT = "help.txt";
         private static string REPEAT_TXT = "repeat.txt";
         private static string EXPRESSIONS_TXT = "expressions.txt";
-        private static int SPEAKER_SLEEP_TIME_MILLIS = 75;
+        private static int SPEAKER_SLEEP_TIME_MILLIS = 50;
         private static int MAX_MILLIS = 500;
 
         // variáveis privadas para validação e inicialização da API Microsoft Speech
