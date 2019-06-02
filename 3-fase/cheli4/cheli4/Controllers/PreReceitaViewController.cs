@@ -26,5 +26,14 @@ namespace cheli4.Controllers
             TempData["PRN"] = nome; //  isto é para caso a pessoa atualize a página!!!
             return View(r);
         }
+
+        [HttpPost]
+        public IActionResult getReceitaAndIngredientes(string nome)
+        {
+            Receita r = this.receitaHandling.getReceitaAndIngredientes(nome);
+            TempData["PRN"] = nome; //  isto é para caso a pessoa atualize a página!!!
+            if (r != null) return View(r);
+            else return null;
+        }
     }
 }

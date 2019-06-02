@@ -30,6 +30,11 @@ namespace cheli4.shared
             return receita;
         }
 
+        public Receita getReceita(int id)
+        {
+            return this._context.receitas.Find(id);
+        }
+
         public Receita getReceita(string nome)
         {
             var receitas = this._context.receitas.Where(r => r.nome == nome);
@@ -44,7 +49,7 @@ namespace cheli4.shared
 
             if (receita == null) return null;
 
-            receita.receitasIngredientes = this._context.receitasIngredientes.Where(ri => ri.FK_id_receita == receita.id).ToHashSet();
+            receita.receitasIngredientes = this._context.receitasIngredientes.Where(ri => ri.FK_id_receita == receita.id).ToList();
 
             foreach (ReceitaIngrediente ri in receita.receitasIngredientes)
             {
@@ -72,7 +77,7 @@ namespace cheli4.shared
 
             if (receita != null)
             {
-                receita.receitasIngredientes = this._context.receitasIngredientes.Where(ri => ri.FK_id_receita == receita.id).ToHashSet();
+                receita.receitasIngredientes = this._context.receitasIngredientes.Where(ri => ri.FK_id_receita == receita.id).ToList();
 
                 if (receita.receitasIngredientes != null)
                 {

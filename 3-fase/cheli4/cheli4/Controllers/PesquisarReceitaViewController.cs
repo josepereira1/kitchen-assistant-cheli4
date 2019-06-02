@@ -51,17 +51,39 @@ namespace cheli4.Controllers
         [HttpPost]
         public IActionResult pesquisarReceitaPorFiltros(string[] YourCheckboxes)
         {
-            List<Receita> receitas = new List<Receita>();
-            TempData["Filtrar"] = "Sim";
-            foreach (string tipo in YourCheckboxes)
+            if (YourCheckboxes.Count() != 0)
             {
-                List<Receita> receitasDesteTipo = this.receitaHandling.getReceitasPorTipo(tipo);
-                if(receitasDesteTipo.Count != 0)foreach(var r in receitasDesteTipo)if(!receitas.Contains(r))receitas.Add(r);
+                List<Receita> receitas = new List<Receita>();
+                
+                foreach (string tipo in YourCheckboxes)
+                {
+                    List<Receita> receitasDesteTipo = this.receitaHandling.getReceitasPorTipo(tipo);
+                    if (receitasDesteTipo != null && receitasDesteTipo.Count != 0) foreach (var r in receitasDesteTipo) if (!receitas.Contains(r)) receitas.Add(r);
+                }
+
+                if(receitas.Count == 0) // CASO NÃO TENHO SIDO FILTRADAS QUAISQUER RECEITAS
+                {
+                    TempData["Fail"] = "No results to display";
+                    return View();
+                }
+                else
+                {
+                    TempData["Filtrar"] = "Sim";
+                    return View(receitas);
+                }
+            }
+            else    //  CASO O CLIENTE NÃO TENHA SELECIONADO NENHUM FILTRO
+            {
+                TempData["Fail"] = "No results to display";
+                return View();
             }
 
-            return View(receitas);
         }
 
-
+        [HttpGet]
+        public IActionResult Contactos()
+        {
+            return View();
+        }
     }
 }

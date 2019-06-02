@@ -1,58 +1,83 @@
 ﻿@model List<cheli4.Models.Comercial.Receita>;
 
 @{
-    ViewData["Title"] = "pesquisarReceitaPorFiltros";
+    ViewData["Title"] = "Search";
 }
 
 <div class="container">
     <div class="row">
+        <h6>Filtros:</h6>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
         <div class="col-sm">
             <form asp-action="pesquisarReceitaPorFiltros">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="row" style="width:100%">
-                    <h6>Filtros:</h6>
-                    <br />
-                    <ul>
-                        <li><input type="checkbox" name="YourCheckBoxes" value="carne"> Carne</li>
-                        <li><input type="checkbox" name="YourCheckBoxes" value="peixe"> Peixe</li>
-                        <li><input type="checkbox" name="YourCheckBoxes" value="carne"> Vegetariano</li>
-                        <li><input type="checkbox" name="YourCheckBoxes" value="peixe"> Vegan</li>
-                        <li><input type="checkbox" name="YourCheckBoxes" value="carne"> Sobremesas</li>
-                        <li><input type="checkbox" name="YourCheckBoxes" value="peixe"> Saladas</li>
-                    </ul>
-
-                </div>
+                <br />
+                <ul>
+                    <li><input type="checkbox" name="YourCheckBoxes" value="beef"> Beef</li>
+                    <li><input type="checkbox" name="YourCheckBoxes" value="fish"> Fish</li>
+                    <li><input type="checkbox" name="YourCheckBoxes" value="vegetarian"> Vegetarian</li>
+                    <li><input type="checkbox" name="YourCheckBoxes" value="desserts"> Desserts</li>
+                    <li><input type="checkbox" name="YourCheckBoxes" value="salads"> Salads</li>
+                </ul>
+                <br />
+                @if (TempData["Fail"] != null)
+                {
+                    <p class="alert alert-danger">@TempData["Fail"]</p>
+                }
                 <div class="form-group">
-                    <input type="submit" value="Pesquisar por filtros" class="btn btn-default btn-primary" />
+                    <input type="submit" value="Search with filters" class="btn btn-default btn-primary" />
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            @if (TempData["Filtrar"] != null)
-            {
+@if (TempData["Filtrar"] != null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="row">
+                    <br />
+                    <h6>
+                        For more information and / or start a recipe, select the image of its recipe:
+                    </h6>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        @foreach (var receita in @Model)
+                        {
 
-                @foreach (var receita in @Model)
-                {
-                    <br /><br />
-                    <ul>
-                        <li>Nome da receita: @receita.nome</li>
-                        <li>Duração: @receita.duracao min</li>
-                    </ul>
-                    <div class="container">
-                        <div class="row">
-                            <img src="~/imagens/@receita.nomeFotoMiniatura" />
-                        </div>
+                            <div class="col-sm text-center center-img">
+                                <form asp-controller="PreReceitaView" asp-action="getReceitaAndIngredientes">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <br /><br />
+                                    Recipe name: @receita.nome<br />
+                                    Duration: @receita.duracao min<br />
+                                    <input type="hidden" name="nome" value="@receita.nome" /><br />
+                                    <input type="image" src="~/imagens/@receita.nomeFotoMiniatura" /><br />
+                                </form>
+                            </div>
+
+                        }
                     </div>
-                }
-
-            }
+                </div>
+                <br /><br />
+            </div>
         </div>
-
     </div>
-</div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img src="~/imagens/home.png" />
+            </div>
+        </div>
+    </div>
+}
+
 

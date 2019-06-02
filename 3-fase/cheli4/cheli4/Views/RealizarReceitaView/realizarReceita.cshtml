@@ -1,7 +1,7 @@
 ﻿@model cheli4.Models.Comercial.Receita;
 
 @{
-    ViewData["Title"] = "realizarReceita";
+    ViewData["Title"] = "Recipe";
 }
 
 @if (TempData["realizar_receita_fail"] != null)
@@ -11,6 +11,12 @@
 
 else
 {
+    <div class="container">
+        <div class="row">
+            <img class="center-img" src="~/imagens/@Model.nomeFotoNormal" />
+        </div>
+    </div>
+
     int n_passo = (int)TempData["realizar_receita_passo"];
     TempData["realizar_receita_passo"] = n_passo;
 
@@ -28,22 +34,27 @@ else
         {
             n_passo = max - 1;
         }
+        <div class="row">
+            <div class="col">
+                <br />
+                <br />
+                <p>@Model.receitasPassos.ToList()[n_passo].passo.descricao</p>
+                <p>Duração - @Model.receitasPassos.ToList()[n_passo].passo.duracao minutos</p>
+                
+                @if (n_passo > 0)
+                {
+                    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_ant" class="btn btn-info">Back</a>
+                }
 
-        <p>@Model.receitasPassos.ToList()[n_passo].passo.descricao</p>
-        <p>Duração - @Model.receitasPassos.ToList()[n_passo].passo.duracao minutos</p>
+                @if (n_passo < max - 1)
+                {
+                    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">NEXT</a>
 
-        if (n_passo > 0)
-        {
-            <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_ant" class="btn btn-info">Anterior</a>
-        }
+                }
 
-        if (n_passo < max - 1)
-        {
-            <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">Próximo</a>
-
-        }
-
-        <a asp-controller="RealizarReceitaView" asp-action="assistente" class="btn btn-info">Falar com a cheli</a>
+                    <a asp-controller="RealizarReceitaView" asp-action="assistente" class="btn btn-info">Speak with cheli!</a>
+            </div>
+        </div>
     }
 
     else
