@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
@@ -16,7 +17,8 @@ namespace cheli4.Models.Comercial
         private static string HELP_TXT = "help.txt";
         private static string REPEAT_TXT = "repeat.txt";
         private static string EXPRESSIONS_TXT = "expressions.txt";
-        private static int SPEAKER_SLEEP_TIME_MILLIS = 100;
+        private static int SPEAKER_SLEEP_TIME_MILLIS = 75;
+        private static int MAX_MILLIS = 500;
 
         // variáveis privadas para validação e inicialização da API Microsoft Speech
         private SpeechConfig config;
@@ -47,9 +49,9 @@ namespace cheli4.Models.Comercial
         public string Listen()
         {
             this.result = ""; // reset à variável de classe
-            Console.WriteLine("listening..."); // apenas para no terminal saber que está à escuta
+            //Console.WriteLine("listening..."); // apenas para no terminal saber que está à escuta
             this.RecognizeSpeechAsync().Wait(); // efetua o reconhecimento de voz
-            Console.WriteLine("listened => {0}", this.result);
+            //Console.WriteLine("listened => {0}", this.result);
             return this.result; 
         }
 
@@ -60,8 +62,9 @@ namespace cheli4.Models.Comercial
         /// </summary>
         /// <param name="text">texto a ser convertido em voz.</param>
         public void Speak(String text) {
-            Console.WriteLine("Converting - {0} - to voice...", text);
+            //Console.WriteLine("Converting - {0} - to voice...", text);
             this.SynthesisToSpeakerAsync(text).Wait();
+            Thread.Sleep(100);
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace cheli4.Models.Comercial
         /// </summary>
         /// <param name="text">texto reconhecido.</param>
         /// <returns>Retorna true caso tenha sido detatada, false caso contrário.</returns>
-        private bool checkCommand(string text, ArrayList list)
+        public bool checkCommand(string text, ArrayList list)
         {
             bool res = false;
             foreach (string expr in list) // verifica se consta na lista
@@ -145,7 +148,8 @@ namespace cheli4.Models.Comercial
         /// </summary>
         /// <returns>Retorna a tarefa de reconhecimento de voz.</returns>
         private async Task RecognizeSpeechAsync()
-        {    
+        {
+
             // Starts speech recognition, and returns after a single utterance is recognized. The end of a
             // single utterance is determined by listening for silence at the end or until a maximum of 15
             // seconds of audio is processed.  The task returns the recognition text as result. 
@@ -168,14 +172,8 @@ namespace cheli4.Models.Comercial
         /// <returns>Retorna a tarefa de conversão de voz.</returns>
         private async Task SynthesisToSpeakerAsync(String text)
         {
-            using (var result = await this.synthesizer.SpeakTextAsync(text))
-            {
-                if (result.Reason == ResultReason.SynthesizingAudioCompleted) // sucesso
-                {
-                    // certifica-se que tem tempo para ditar a expressão
-                    System.Threading.Thread.Sleep(text.Length * SPEAKER_SLEEP_TIME_MILLIS);
-                }
-            }
+            Thread.Sleep(Math.Min(text.Length * SPEAKER_SLEEP_TIME_MILLIS, MAX_MILLIS));
+            var result = await this.synthesizer.SpeakTextAsync(text);
         }
 
         private void initCommandList(String fileName, ArrayList list)

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace cheli4.Controllers
 {
@@ -14,12 +13,13 @@ namespace cheli4.Controllers
     {
         private ReceitaHandling receitaHandling;
         private Reconhecimento rec;
-        private String passo;
+        private String str;
 
         public RealizarReceitaViewController(DataBaseContext context)
         {
             this.receitaHandling = new ReceitaHandling(context);
-            this.rec = new Reconhecimento();
+            this.rec = null;
+            this.str = null;
         }
 
         public IActionResult realizarReceita_ant()
@@ -37,9 +37,6 @@ namespace cheli4.Controllers
 
         public IActionResult realizarReceita()
         {
-
-            Thread t = null;
-
             int id = (int)TempData["realizar_receita_id"];
             Receita receita = this.receitaHandling.getReceitaAndPassos(id);
             TempData["realizar_receita_id"] = id;
@@ -50,18 +47,21 @@ namespace cheli4.Controllers
                 return View();
             }
 
-            if(TempData["ditar_passo"] != null) //  REPEAT, NEXT ou BACK
+            else if(TempData["ditar_passo"] != null) //  REPEAT, NEXT ou BACK
             {
+                if (rec == null) this.rec = new Reconhecimento();
+
                 int n_passo = (int)TempData["realizar_receita_passo"];
-                this.passo = receita.receitasPassos.ToList()[n_passo].passo.descricao;
-                t = new Thread(run);
+                this.str = receita.receitasPassos.ToList()[n_passo].passo.descricao;
+                new Thread(run).Start(); // diz o próximo passo
                 TempData["realizar_receita_passo"] = n_passo;
             }
 
             
-            if (TempData["expressions"] != null) // EXPRESIONS
+            else if (TempData["expressions"] != null) // EXPRESIONS
             {
-                
+                if (rec == null) this.rec = new Reconhecimento();
+
                 int n_passo = (int)TempData["realizar_receita_passo"];
                 List<Expressao> expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
                 TempData["realizar_receita_passo"] = n_passo;
@@ -73,7 +73,7 @@ namespace cheli4.Controllers
                     int n_expressao = 0;
                     foreach (Expressao exp in expressoes)
                     {
-                        rec.Speak(n_expressao + " - " + exp.expressao);
+                        rec.Speak(n_expressao + ". " + exp.expressao);
                         n_expressao++;
                     }
 
@@ -82,8 +82,11 @@ namespace cheli4.Controllers
 
                     try
                     {
-                        n = Int32.Parse(rec.Listen());
-                        if (n < 0 || n > n_expressao) throw new Exception();
+                        rec.Speak("Tell me the number now!");
+                        String str = rec.Listen();
+                        str = str.Substring(0, str.Length - 1);
+                        n = Int32.Parse(str);
+                        if (n < 0 || n > n_expressao - 1) throw new Exception();
 
                     }
                     catch (Exception e)
@@ -101,47 +104,45 @@ namespace cheli4.Controllers
                 }
             }
 
-            /** caso tenha passo para ditar corre a Thread para o passo ser ditado 
-                ao mesmo tempo que a página do novo passo é apresentada 
-            */
-            if (t != null) t.Start(); 
             return View(receita);           
         }
 
         public IActionResult assistente()
         {
+            if (rec == null) this.rec = new Reconhecimento();
+
             try
             {
                 rec.Speak("Hi, tell me!");
                 String text = rec.Listen();
                
                 int type = rec.commandType(text);
-                if (type == 0)
+                if (type == 0) // NEXT
                 {
                     TempData["ditar_passo"] = true;
                     return RedirectToAction("realizarReceita_prox", "RealizarReceitaView");
                 }
-                else if (type == 1)
+                else if (type == 1) // BACK
                 {
                     TempData["ditar_passo"] = true;
                     return RedirectToAction("realizarReceita_ant", "RealizarReceitaView");
                 }
-                else if (type == 2)
+                else if (type == 2) // HELP
                 {
                     TempData["popup"] = true;
                     return RedirectToAction("realizarReceita", "RealizarReceitaView");
                 }
-                else if (type == 3)
+                else if (type == 3) // REPEAT
                 {
                     TempData["ditar_passo"] = true;
                     return RedirectToAction("realizarReceita", "RealizarReceitaView");
                 }
-                else if (type == 4)
+                else if (type == 4) // EXPRESSIONS
                 {
                     TempData["expressions"] = true;
                     return RedirectToAction("realizarReceita", "RealizarReceitaView");
                 }
-                else
+                else // INSUCESSO AO PERCEBER COMANDO
                 {
                     rec.Speak("Could not understand, please try again!");
                     return RedirectToAction("realizarReceita", "RealizarReceitaView");
@@ -157,7 +158,7 @@ namespace cheli4.Controllers
 
         private void run()
         {
-            rec.Speak(passo);
+            rec.Speak(str);
         }
     }
 }
