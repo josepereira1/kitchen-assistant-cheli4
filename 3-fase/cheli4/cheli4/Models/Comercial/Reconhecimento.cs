@@ -109,7 +109,7 @@ namespace cheli4.Models.Comercial
             bool res = false;
             foreach (string expr in list) // verifica se consta na lista
             {
-                if (text.Contains(expr)) // sucesso - a expressão hey chely foi dita
+                if (text.Contains(expr)) // sucesso - foi detetada a expressão no meio da string text
                 {
                     res = true;
                     break;
@@ -158,23 +158,7 @@ namespace cheli4.Models.Comercial
             {
                 String text = result.Text;
                 this.result = text.ToLower();
-            }
-            else if (result.Reason == ResultReason.NoMatch)
-            {
-                Console.WriteLine($"NOMATCH: Speech could not be recognized.");
-            }
-            else if (result.Reason == ResultReason.Canceled)
-            {
-                var cancellation = CancellationDetails.FromResult(result);
-                Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
-
-                if (cancellation.Reason == CancellationReason.Error)
-                {
-                    Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
-                    Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
-                    Console.WriteLine($"CANCELED: Did you update the subscription info?");
-                }
-            }          
+            }      
         }
 
         /// <summary>
@@ -190,18 +174,6 @@ namespace cheli4.Models.Comercial
                 {
                     // certifica-se que tem tempo para ditar a expressão
                     System.Threading.Thread.Sleep(text.Length * SPEAKER_SLEEP_TIME_MILLIS);
-                }
-                else if (result.Reason == ResultReason.Canceled)
-                {
-                    var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-                    Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
-
-                    if (cancellation.Reason == CancellationReason.Error)
-                    {
-                        Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
-                        Console.WriteLine($"CANCELED: ErrorDetails=[{cancellation.ErrorDetails}]");
-                        Console.WriteLine($"CANCELED: Did you update the subscription info?");
-                    }
                 }
             }
         }

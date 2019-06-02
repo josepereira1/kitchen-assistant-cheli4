@@ -19,8 +19,7 @@ namespace cheli4.Models.Comercial
         [Required]
         public int duracao { set; get; }
 
-        [Required]
-        public ICollection<Expressao> expressoes { set; get; }
+        public virtual ICollection<Expressao> expressoes { set; get; }
 
         public virtual ICollection<ReceitaPasso> receitasPassos { set; get; }
     }

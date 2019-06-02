@@ -22,9 +22,10 @@ namespace cheli4.shared
             if (receita == null) return null; // para não dar erro nas proximas linhas
 
             receita.receitasPassos = this._context.receitasPassos.Where(rp => rp.FK_id_receita == receita.id).ToList();
-            foreach(ReceitaPasso p in receita.receitasPassos)
+            foreach (ReceitaPasso rp in receita.receitasPassos)
             {
-                p.passo = this._context.passos.Find(p.FK_id_passo);
+                rp.passo = this._context.passos.Find(rp.FK_id_passo); // vai buscar o passo
+                rp.passo.expressoes = this._context.expressoes.Where(expr => expr.FK_id_passo == rp.FK_id_passo).ToList();
             }
 
             return receita;

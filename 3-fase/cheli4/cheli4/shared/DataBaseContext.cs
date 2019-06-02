@@ -46,6 +46,21 @@ namespace cheli4.shared
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Expressao>()
+                .HasKey(e => e.expressao);
+
+            modelBuilder.Entity<Ingrediente>()
+                .HasKey(i => i.id);
+
+            modelBuilder.Entity<Passo>()
+               .HasKey(p => p.id);
+
+            modelBuilder.Entity<Receita>()
+               .HasKey(r => r.id);
+
+            modelBuilder.Entity<Cliente>()
+              .HasKey(c => c.username);
+
             modelBuilder.Entity<ReceitaIngrediente>()
                 .HasKey(rc => new { rc.FK_id_ingrediente, rc.FK_id_receita });
 
@@ -63,6 +78,7 @@ namespace cheli4.shared
 
             // Recursos Humanos -----------------------------------------
 
+            // relação N para N entre Cliente e Receita -------------
             modelBuilder.Entity<ClienteReceita>()
                 .HasOne(cr => cr.cliente)
                 .WithMany(c => c.ClienteReceitas)
@@ -73,6 +89,7 @@ namespace cheli4.shared
                .WithMany(r => r.ClienteReceitas)
                .HasForeignKey(cr => cr.FK_id_receita);
 
+            // relação N para N entre Receita e Cliente -------------
             modelBuilder.Entity<Agenda>()
                 .HasOne(a => a.cliente)
                 .WithMany(c => c.agenda)
@@ -83,10 +100,10 @@ namespace cheli4.shared
                .WithMany(r => r.agenda)
                .HasForeignKey(a => a.FK_id_receita);
 
-            //TODO falta "ensinar" a tri-relação resposta (qd começarmos a fazer o quiz metemos) 
 
             // COMERCIAL -----------------------------------------------
 
+            // relação N para N entre Receita e Ingrediente -------------
             modelBuilder.Entity<ReceitaIngrediente>()
                 .HasOne(ri => ri.receita)
                 .WithMany(r => r.receitasIngredientes)
@@ -97,6 +114,7 @@ namespace cheli4.shared
                 .WithMany(i => i.receitasIngredientes)
                 .HasForeignKey(ri => ri.FK_id_ingrediente);
 
+            // relação N para N entre Receita e Passo --------------
             modelBuilder.Entity<ReceitaPasso>()
                 .HasOne(rp => rp.receita)
                 .WithMany(r => r.receitasPassos)
@@ -106,6 +124,12 @@ namespace cheli4.shared
                 .HasOne(rp => rp.passo)
                 .WithMany(p => p.receitasPassos)
                 .HasForeignKey(rp => rp.FK_id_passo);
+
+            // relação 1 para N entre Passo e Expressões -------------
+            modelBuilder.Entity<Expressao>()
+                .HasOne(e => e.passo)
+                .WithMany(p => p.expressoes)
+                .HasForeignKey(e => e.FK_id_passo);
         }
     }
 }

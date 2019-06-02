@@ -66,24 +66,45 @@ namespace cheli4.Controllers
                 List<Expressao> expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
                 TempData["realizar_receita_passo"] = n_passo;
 
-                if (expressoes.Count() == 0)
+                if (expressoes.Count != 0)
+                {
+                    rec.Speak("From the following expressions point me the number which you did not understand.");
+
+                    int n_expressao = 0;
+                    foreach (Expressao exp in expressoes)
+                    {
+                        rec.Speak(n_expressao + " - " + exp.expressao);
+                        n_expressao++;
+                    }
+
+                    /** Número da expressão indicado pelo utilizador */
+                    int n = -1;
+
+                    try
+                    {
+                        n = Int32.Parse(rec.Listen());
+                        if (n < 0 || n > n_expressao) throw new Exception();
+
+                    }
+                    catch (Exception e)
+                    {
+                        rec.Speak("The number you said is invalid!");
+                        return View(receita);
+                    }
+
+                    rec.Speak(expressoes[n].descricao);
+                } 
+
+                else
                 {
                     rec.Speak("There are no expressions for this step!");
-                    return View(receita);
-                }
-
-                int n_expressao = 0;
-
-                rec.Speak("From the following expressions point me the number which you did not understand.");
-                
-                foreach (Expressao exp in expressoes)
-                {
-                    rec.Speak(n_expressao + " - " + exp.expressao);
-                    n_expressao++;
                 }
             }
 
-            if (t != null) t.Start();
+            /** caso tenha passo para ditar corre a Thread para o passo ser ditado 
+                ao mesmo tempo que a página do novo passo é apresentada 
+            */
+            if (t != null) t.Start(); 
             return View(receita);           
         }
 
@@ -91,17 +112,9 @@ namespace cheli4.Controllers
         {
             try
             {
-                String text;
                 rec.Speak("Hi, tell me!");
-                try
-                {
-                    text = rec.Listen();
-                }
-                catch (Exception e)
-                {
-                    rec.Speak("Could not understand, please try again!");
-                    return RedirectToAction("realizarReceita", "RealizarReceitaView");
-                }
+                String text = rec.Listen();
+               
                 int type = rec.commandType(text);
                 if (type == 0)
                 {

@@ -36,7 +36,7 @@ namespace cheli4.Controllers
                     TempData["PRN"] = nome;
                     return RedirectToAction("getReceitaAndIngredientes", "PreReceitaView");
                 } else{
-                    TempData["Fail"] = "Não existe receita com este nome! Tente novamente";
+                    TempData["Fail"] = "No recipe found with that name, try again!";
                 }
             }
             return View();
