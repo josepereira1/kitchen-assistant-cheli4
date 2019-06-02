@@ -41,6 +41,11 @@ namespace cheli4.shared
 
         public bool addCliente(Cliente cliente)
         {
+            if (this._context.clientes.Any(c => c.username == cliente.username)) return false;
+
+            /** antes de enviar para a BD encripatamos a password */
+            cliente.password = Encriptacao.HashString(cliente.password);
+
             this._context.clientes.Add(cliente);
             this._context.SaveChanges();
             return true;
@@ -50,7 +55,10 @@ namespace cheli4.shared
 
         public bool validateCliente(Cliente cliente)
         {
-            return this._context.clientes.Any(c => c.username.Equals(cliente.username) && c.password.Equals(cliente.password));
+            Cliente c = this._context.clientes.Find(cliente.username);
+            if (c == null) return false; /** não existe cliente com esse username */
+            string hash = c.password; /** hash já na base de dados */
+            return Encriptacao.VerifyMd5Hash(cliente.password, hash);
         }
 
 

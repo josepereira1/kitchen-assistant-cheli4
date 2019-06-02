@@ -41,6 +41,8 @@ namespace cheli4.Controllers
         [HttpPost]
         public IActionResult registar([Bind] Cliente c)
         {
+            ModelState.Remove("apagado");
+
             if (ModelState.IsValid)
             {
                 c.apagado = false;
@@ -49,11 +51,11 @@ namespace cheli4.Controllers
                 if (RegistrationStatus)
                 {
                     ModelState.Clear();
-                    TempData["Success"] = "Registration Successful!";
+                    TempData["registar_Success"] = "Registration Successful!";
                 }
                 else
                 {
-                    TempData["Fail"] = "This User ID already exists. Registration Failed.";
+                    TempData["registar_Fail"] = "This useranme already exists. Registration Failed.";
                 }
             }
 
@@ -72,14 +74,18 @@ namespace cheli4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> login([Bind] Cliente cliente)
         {
+            /** O método IsValid() verfica se o objeto cliente tem todos os campos [Required] preenchidos.
+             * Uma vez que para o login apenas precisamos dos campos: username e password mas no entanto existem
+             * mais campos obrigatórios ([Required]) é necessário não contar com esses campos, ou seja remove-los 
+             * do MovelState.
+             */
             ModelState.Remove("nome");
             ModelState.Remove("email");
             ModelState.Remove("apagado");
 
             if (ModelState.IsValid)
             {
-                bool loginStatus;
-                loginStatus = this.clienteHandling.validateCliente(cliente);
+                bool loginStatus = this.clienteHandling.validateCliente(cliente);
 
                 if (loginStatus)
                 {
@@ -91,12 +97,13 @@ namespace cheli4.Controllers
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
 
                     await HttpContext.SignInAsync(principal);
-                    TempData["Success"] = "Login successful!";
+                    TempData["login_Success"] = "Login successful!";
+                    ModelState.Clear();
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    TempData["Fail"] = "Login Failed. Please enter correct credentials";
+                    TempData["login_Fail"] = "Login Failed. Please enter correct credentials";
                 }
             }
             return View();

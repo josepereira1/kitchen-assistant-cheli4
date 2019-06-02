@@ -9,9 +9,9 @@
 <div class="row">
     <div class="col-md-4">
 
-        @if (TempData["Fail"] != null)
+        @if (TempData["login_Fail"] != null)
         {
-            <p class="alert alert-danger">@TempData["Fail"]</p>
+            <p class="alert alert-danger">@TempData["login_Fail"]</p>
         }
 
         <form asp-action="login">
@@ -32,7 +32,7 @@
             
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-default btn-success" />
-                <a asp-action="registar" class="btn btn-info">Regiter</a>
+                <a asp-controller="ClienteView" asp-action="registar" class="btn btn-info">Register</a>
             </div>
         </form>
     </div>

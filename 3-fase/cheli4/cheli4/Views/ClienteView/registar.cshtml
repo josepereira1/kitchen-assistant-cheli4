@@ -10,17 +10,17 @@
 <div class="row">
     <div class="col-md-4">
 
-        @if (TempData["Success"] != null)
+        @if (TempData["registar_Success"] != null)
         {
             <p class="alert alert-success">
-                @TempData["Success"]
+                @TempData["registar_Success"]
                 <a asp-action="login">Click here to login</a>
             </p>
         }
 
-        @if (TempData["Fail"] != null)
+        @if (TempData["registar_Fail"] != null)
         {
-            <p class="alert alert-danger">@TempData["Fail"]</p>
+            <p class="alert alert-danger">@TempData["registar_Fail"]</p>
         }
 
         <form asp-action="registar">
@@ -77,6 +77,7 @@
 
             <div class="form-group">
                 <input type="submit" value="Registar" class="btn btn-default btn-primary" />
+                <a asp-controller="ClienteView" asp-action="login" class="btn btn-default btn-success">Login</a>
             </div>
 
         </form>
