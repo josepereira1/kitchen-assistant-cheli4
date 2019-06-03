@@ -42,5 +42,6 @@ namespace cheli4.Models.RecursosHumanos
 
         public virtual ICollection<ClienteReceita> ClienteReceitas { set; get; }
         public virtual ICollection<Agenda> agenda { set; get; }
+        public virtual ICollection<Codigo> codigos { set; get; }
     }
 }

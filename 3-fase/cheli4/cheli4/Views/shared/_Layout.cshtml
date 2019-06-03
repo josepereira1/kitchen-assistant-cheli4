@@ -14,23 +14,26 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Cheli4</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="PesquisarReceitaView" asp-action="pesquisarReceitaPorFiltros">Search with filters</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="PesquisarReceitaView" asp-action="pesquisarReceitaPorNome">Search with names</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="PesquisarReceitaView" asp-action="Contactos">Contacts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="ClienteView" asp-action="logout">Log Out</a>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Cheli4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="PesquisarReceitaView" asp-action="pesquisarReceitaPorFiltros">Search with filters</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="PesquisarReceitaView" asp-action="pesquisarReceitaPorNome">Search with names</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="PesquisarReceitaView" asp-action="Contactos">Contacts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="ClienteView" asp-action="Codigos">My Codes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="ClienteView" asp-action="logout">Log Out</a>
+                        </li>
+                    </ul>
                     }
                 </div>
             </div>

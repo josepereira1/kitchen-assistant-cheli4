@@ -27,6 +27,8 @@ namespace cheli4.shared
 
         //  RECURSOS HUMANOS
 
+        public DbSet<Codigo> codigos { set; get; }
+
         public DbSet<Agenda> agendas { set; get; }
 
         public DbSet<Cliente> clientes { set; get; }
@@ -46,6 +48,10 @@ namespace cheli4.shared
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Codigo>()
+                .HasKey(e => e.codigo);
+
             modelBuilder.Entity<Expressao>()
                 .HasKey(e => e.expressao);
 
@@ -130,6 +136,12 @@ namespace cheli4.shared
                 .HasOne(e => e.passo)
                 .WithMany(p => p.expressoes)
                 .HasForeignKey(e => e.FK_id_passo);
+
+            // relação 1 para N entre Passo e Expressões -------------
+            modelBuilder.Entity<Codigo>()
+                .HasOne(e => e.cliente)
+                .WithMany(c => c.codigos)
+                .HasForeignKey(e => e.FK_username_cliente);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using cheli4.Models;
 using cheli4.Models.RecursosHumanos;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace cheli4.shared
@@ -59,6 +60,10 @@ namespace cheli4.shared
             if (c == null) return false; /** não existe cliente com esse username */
             string hash = c.password; /** hash já na base de dados */
             return Encriptacao.VerifyMd5Hash(cliente.password, hash);
+        }
+
+        public List<Codigo> getCodigosCliente(string username) {
+            return this._context.codigos.Where(c => c.FK_username_cliente == username).ToList();
         }
 
 

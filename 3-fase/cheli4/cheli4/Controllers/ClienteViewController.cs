@@ -85,6 +85,7 @@ namespace cheli4.Controllers
 
             if (ModelState.IsValid)
             {
+                TempData["username"] = cliente.username;
                 bool loginStatus = this.clienteHandling.validateCliente(cliente);
 
                 if (loginStatus)
@@ -116,6 +117,21 @@ namespace cheli4.Controllers
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Codigos()
+        {
+            List<Codigo> codigos = this.clienteHandling.getCodigosCliente("jose");
+            if (codigos.Count == 0 || codigos == null)
+            {
+                TempData["Fail"] = "Do not have codes!";
+                return View();
+            }
+            else {
+                return View(codigos);
+            }
+            
         }
     }
 }

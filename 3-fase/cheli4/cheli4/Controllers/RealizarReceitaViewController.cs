@@ -171,7 +171,7 @@ namespace cheli4.Controllers
                     rec.Speak("The number you said is invalid!");
                 }
 
-                //rec.Speak(expressoes[n].descricao);
+                rec.Speak(expressoes[n].descricao);
             }
 
             else

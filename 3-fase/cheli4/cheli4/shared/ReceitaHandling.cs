@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using cheli4.Models;
 using cheli4.Models.Comercial;
+using cheli4.Models.RecursosHumanos;
+using Microsoft.EntityFrameworkCore;
 
 namespace cheli4.shared
 {
@@ -94,5 +97,25 @@ namespace cheli4.shared
                 return null;
             }
         }
+
+        /*public void setClassificacao(int classificacao, int receita_id, string username)
+        {
+            List<ClienteReceita> list = this._context.clientesReceitas.Where(elem => elem.FK_username_cliente == username && elem.FK_id_receita == receita_id).ToList();
+            ClienteReceita cr = null;
+
+            if (list.Count() == 0) {
+                cr = new ClienteReceita { FK_username_cliente = username, FK_id_receita = receita_id, n_realizada = 1, ultima_nota = classificacao };
+                this._context.clientesReceitas.Add(cr);
+            } else
+            {
+                cr = list.First();
+                cr.ultima_nota = classificacao;
+                cr.n_realizada++;
+                this._context.Entry(cr).State = EntityState.Modified;
+            }
+
+            
+            this._context.SaveChanges();
+        }*/
     }
 }
