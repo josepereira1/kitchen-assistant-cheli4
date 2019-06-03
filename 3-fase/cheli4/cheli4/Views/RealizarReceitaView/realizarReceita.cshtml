@@ -57,7 +57,7 @@ else
                     <a asp-controller="PesquisarReceitaView" asp-action="pesquisarReceitaPorNome" class="btn btn-info">Finish</a>
                 }
 
-                </div>
+            </div>
         </div>
     }
 
@@ -71,5 +71,16 @@ else
         <script>
             alert("NEXT - Proceeds to next recipe step.\nBACK - Go back to the previous step.\nHELP - Explain cheli4 commands.\nREPEAT - Repeat current step.");
         </script>
+    }
+
+    if (TempData["pop_up_expressions"] != null)
+    {
+        <center>
+            <p></p>
+            @foreach (var expressao in Model.receitasPassos.ToList()[n_passo].passo.expressoes.ToList())
+            {
+                <p>@expressao.expressao - @expressao.descricao</p>
+            }
+        </center>
     }
 }

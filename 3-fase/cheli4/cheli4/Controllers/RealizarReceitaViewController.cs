@@ -14,14 +14,12 @@ namespace cheli4.Controllers
         private ReceitaHandling receitaHandling;
         private Reconhecimento rec;
         private String str;
-        private List<Expressao> expressoes;
 
         public RealizarReceitaViewController(DataBaseContext context)
         {
             this.receitaHandling = new ReceitaHandling(context);
             this.rec = null;
             this.str = null;
-            this.expressoes = null;
         }
 
         public IActionResult realizarReceita_ant()
@@ -49,7 +47,7 @@ namespace cheli4.Controllers
                 return View();
             }
 
-            else if(TempData["ditar_passo"] != null) //  REPEAT, NEXT ou BACK
+            else if (TempData["ditar_passo"] != null) //  REPEAT, NEXT ou BACK
             {
                 if (rec == null) this.rec = new Reconhecimento();
 
@@ -59,20 +57,26 @@ namespace cheli4.Controllers
                 TempData["realizar_receita_passo"] = n_passo;
             }
 
-            
+
             else if (TempData["expressions"] != null) // EXPRESIONS
             {
-                if (rec == null) this.rec = new Reconhecimento();
-
                 int n_passo = (int)TempData["realizar_receita_passo"];
-                this.expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
+                List<Expressao> expressoes = receita.receitasPassos.ToList()[n_passo].passo.expressoes.ToList();
                 TempData["realizar_receita_passo"] = n_passo;
 
-                new Thread(run2).Start();
-               
+                if (expressoes.Count != 0)
+                {
+                    TempData["pop_up_expressions"] = true;
+                }
+                else
+                {
+                    if (rec == null) this.rec = new Reconhecimento();
+                    rec.Speak("There are no expressions for this step!");
+                }
+
             }
 
-            return View(receita);           
+            return View(receita);
         }
 
         public IActionResult assistente()
@@ -83,7 +87,7 @@ namespace cheli4.Controllers
             {
                 rec.Speak("Hi, tell me.");
                 String text = rec.Listen();
-               
+
                 int type = rec.commandType(text);
                 if (type == 0) // NEXT
                 {
@@ -127,58 +131,6 @@ namespace cheli4.Controllers
         private void run()
         {
             rec.Speak(str);
-        }
-
-        public void run2()
-        {
-            if (expressoes.Count != 0) { 
-
-                rec.Speak("From the following expressions point me the number which you did not understand.");
-
-                int n_expressao = 0;
-                foreach (Expressao exp in expressoes)
-                {
-                    rec.Speak(n_expressao + ". " + exp.expressao);
-                    n_expressao++;
-                }
-
-                /** Número da expressão indicado pelo utilizador */
-                int n = -1;
-
-                rec.Speak("Tell me the number now!");
-                String str = rec.Listen();
-
-                System.Diagnostics.Debug.WriteLine("=>>>>>>>>>>>>>>>>>>>>>>>>>" + str);
-
-                try
-                {
-                    if (str.Contains("0") || str.Contains("zoo") || str.Contains("zeal") || str.Contains("xur")) n = 0;
-                    else if (str.Contains("1")) n = 1;
-                    else if (str.Contains("2") || str.Contains("too") || str.Contains("to")) n = 2;
-                    else if (str.Contains("3") || str.Contains("free")) n = 3;
-                    else if (str.Contains("4")) n = 4;
-                    else if (str.Contains("5")) n = 5;
-                    else if (str.Contains("6")) n = 6;
-                    else if (str.Contains("7")) n = 7;
-                    else if (str.Contains("8") || str.Contains("hey")) n = 8;
-                    else if (str.Contains("9")) n = 9;
-                    else n = Int32.Parse(str);
-
-                    if (n < 0 || n > expressoes.Count -1) { throw new Exception(); }
-
-                    } catch (Exception e)
-                {
-                    rec.Speak("The number you said is invalid!");
-                }
-
-                rec.Speak(expressoes[n].descricao);
-            }
-
-            else
-            {
-                rec.Speak("There are no expressions for this step!");
-            }
-
         }
     }
 }
