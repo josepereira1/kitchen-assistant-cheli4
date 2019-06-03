@@ -16,13 +16,6 @@ namespace cheli4
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
-            /*Reconhecimento rec = new Reconhecimento();
-            while(true)
-            {
-                String text = rec.Listen();
-                Console.WriteLine(text + " " + text.Contains("0"));
-                
-            }*/
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
