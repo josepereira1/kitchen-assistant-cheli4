@@ -4,7 +4,7 @@
     ViewData["Title"] = "Register";
 }
 
-<h4>Registar nova pessoa</h4>
+<h4>Register account</h4>
 <hr />
 
 <div class="row">
@@ -28,55 +28,57 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
+                <label asp-for="username" class="control-label">username</label>
                 <input asp-for="username" class="form-control" />
                 <span asp-validation-for="username" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
+                <label asp-for="password" class="control-label">password</label>
                 <input asp-for="password" class="form-control" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="nome" class="control-label"></label>
+                <label asp-for="nome" class="control-label">name</label>
                 <input asp-for="nome" class="form-control" />
                 <span asp-validation-for="nome" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
+                <label asp-for="email" class="control-label">email</label>
                 <input asp-for="email" class="form-control" />
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="peso" class="control-label"></label>
+                <label asp-for="peso" class="control-label">weight</label>
                 <input asp-for="peso" class="form-control" />
                 <span asp-validation-for="peso" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="data_nascimento" class="control-label"></label>
+                <label asp-for="data_nascimento" class="control-label">birthday</label>
                 <input asp-for="data_nascimento" class="form-control" />
                 <span asp-validation-for="data_nascimento" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="idade" class="control-label"></label>
+                <label asp-for="idade" class="control-label">age</label>
                 <input asp-for="idade" class="form-control" />
                 <span asp-validation-for="idade" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="altura" class="control-label"></label>
+                <label asp-for="altura" class="control-label">
+                    height
+                </label>
                 <input asp-for="altura" class="form-control" />
                 <span asp-validation-for="altura" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Registar" class="btn btn-default btn-primary" />
+                <input type="submit" value="Register" class="btn btn-default btn-primary" />
                 <a asp-controller="ClienteView" asp-action="login" class="btn btn-default btn-success">Login</a>
             </div>
 
