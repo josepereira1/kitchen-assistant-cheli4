@@ -1,0 +1,39 @@
+﻿@model cheli4.Models.RecursosHumanos.Cliente
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<div class="row">
+    <div class="col-md-4">
+
+        @if (TempData["login_Fail"] != null)
+        {
+            <p class="alert alert-danger">@TempData["login_Fail"]</p>
+        }
+
+        <form asp-action="login">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="username" class="control-label"></label>
+                <input asp-for="username" class="form-control" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-default btn-success" />
+                <a asp-controller="ClienteView" asp-action="registar" class="btn btn-info">Register</a>
+            </div>
+        </form>
+    </div>
+</div>  

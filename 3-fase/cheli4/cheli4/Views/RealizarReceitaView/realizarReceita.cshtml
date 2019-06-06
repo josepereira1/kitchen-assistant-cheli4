@@ -1,0 +1,87 @@
+﻿@model cheli4.Models.Comercial.Receita;
+
+@{
+    ViewData["Title"] = "Recipe";
+}
+
+@if (TempData["realizar_receita_fail"] != null)
+{
+    <p class="alert alert-danger">@TempData["realizar_receita_fail"]</p>
+}
+
+else
+{
+    <div class="container">
+        <div class="row">
+            <img class="center-img" src="~/imagens/@Model.nomeFotoNormal" />
+        </div>
+    </div>
+
+    int n_passo = (int)TempData["realizar_receita_passo"];
+    TempData["realizar_receita_passo"] = n_passo;
+
+    int max = Model.receitasPassos.Count();
+
+    if (max != 0)
+    {
+
+        if (n_passo < 0)
+        {
+            n_passo = 0;
+        }
+
+        else if (n_passo > max - 1)
+        {
+            n_passo = max - 1;
+        }
+        <div class="row center">
+            <div class="col text-center">
+                <br />
+                <br />
+                <p>@Model.receitasPassos.ToList()[n_passo].passo.descricao</p>
+                <p>Duration - @Model.receitasPassos.ToList()[n_passo].passo.duracao min</p>
+
+                @if (n_passo > 0)
+                {
+                    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_ant" class="btn btn-info">Back</a>
+                }
+
+                @if (n_passo < max - 1)
+                {
+
+                    <a asp-controller="RealizarReceitaView" asp-action="realizarReceita_prox" class="btn btn-info">Next</a>
+                    <a asp-controller="RealizarReceitaView" asp-action="assistente" class="btn btn-info">Speak with cheli!</a>
+                }
+                else
+                {
+                    <a asp-controller="PesquisarReceitaView" asp-action="pesquisarReceitaPorNome" class="btn btn-info">Finish</a>
+                    <a asp-controller="RealizarReceitaView" asp-action="assistente" class="btn btn-info">Speak with cheli!</a>
+                }
+
+            </div>
+        </div>
+    }
+
+    else
+    {
+        <p class="alert alert-danger">A receita não está completa!</p>
+    }
+
+    if (TempData["popup"] != null)
+    {
+        <script>
+            alert("NEXT - Proceeds to next recipe step.\nBACK - Go back to the previous step.\nHELP - Explain cheli4 commands.\nREPEAT - Repeat current step.");
+        </script>
+    }
+
+    if (TempData["pop_up_expressions"] != null)
+    {
+        <center>
+            <p></p>
+            @foreach (var expressao in Model.receitasPassos.ToList()[n_passo].passo.expressoes.ToList())
+            {
+                <p>@expressao.expressao - @expressao.descricao</p>
+            }
+        </center>
+    }
+}

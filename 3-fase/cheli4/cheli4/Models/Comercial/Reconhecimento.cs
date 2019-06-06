@@ -2,17 +2,23 @@
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
 namespace cheli4.Models.Comercial
 {
-    class Reconhecimento : IReconhecimento
+    class Reconhecimento
     {
-        private static string key = "84499d48ad0646038b39623e46e12228";
+        private static string key = "94b604dceab14c2b87fd111b7cb78a38";
         private static string region = "westus";
-        private static string HEY_CHELY_TXT = "hey-chely-list.txt";
-        private static int SPEAKER_SLEEP_TIME_MILLIS = 100;
+        private static string NEXT_TXT = "next.txt";
+        private static string BACK_TXT = "back.txt";
+        private static string HELP_TXT = "help.txt";
+        private static string REPEAT_TXT = "repeat.txt";
+        private static string EXPRESSIONS_TXT = "expressions.txt";
+        private static int SPEAKER_SLEEP_TIME_MILLIS = 50;
+        private static int MAX_MILLIS = 500;
 
         // variáveis privadas para validação e inicialização da API Microsoft Speech
         private SpeechConfig config;
@@ -20,13 +26,17 @@ namespace cheli4.Models.Comercial
         private SpeechRecognizer recognizer;
 
         private String result; // variável privada para armazenamento do reconhecimento de voz
-        private ArrayList heyChelyList;
+        private ArrayList nextList;
+        private ArrayList backList;
+        private ArrayList helpList;
+        private ArrayList repeatList;
+        private ArrayList expressionsList;
 
         /// <summary>Construtor vazio. Cria o objeto útil para reconhecimento de voz.</summary>
         public Reconhecimento()
         {
             this.result = "";
-            this.initHeyChelyList(); // inicializa a lista das possíveis expressões para "hey chely"
+            this.initCmdsList(); // inicializa a lista das possíveis expressões para cada comando
             this.initMicrosoftSpeechAPI(); 
         }
 
@@ -39,9 +49,9 @@ namespace cheli4.Models.Comercial
         public string Listen()
         {
             this.result = ""; // reset à variável de classe
-            Console.WriteLine("listening..."); // apenas para no terminal saber que está à escuta
+            //Console.WriteLine("listening..."); // apenas para no terminal saber que está à escuta
             this.RecognizeSpeechAsync().Wait(); // efetua o reconhecimento de voz
-            Console.WriteLine("listened => {0}", this.result);
+            //Console.WriteLine("listened => {0}", this.result);
             return this.result; 
         }
 
@@ -52,8 +62,9 @@ namespace cheli4.Models.Comercial
         /// </summary>
         /// <param name="text">texto a ser convertido em voz.</param>
         public void Speak(String text) {
-            Console.WriteLine("Converting - {0} - to voice...", text);
+            //Console.WriteLine("Converting - {0} - to voice...", text);
             this.SynthesisToSpeakerAsync(text).Wait();
+            Thread.Sleep(100);
         }
 
         /// <summary>
@@ -92,16 +103,16 @@ namespace cheli4.Models.Comercial
         }
 
         /// <summary>
-        /// Indica se a expressão "hey chely" foi detetada no texto.
+        /// Indica se a expressão foi detetada no texto, note-se que não se usa apenas o método contains(), pois a expressão pode estar lcoalizada a meio do texto.
         /// </summary>
         /// <param name="text">texto reconhecido.</param>
         /// <returns>Retorna true caso tenha sido detatada, false caso contrário.</returns>
-        public bool IsHeyChelyExpression(string text)
+        public bool checkCommand(string text, ArrayList list)
         {
             bool res = false;
-            foreach (string expr in this.heyChelyList) // verifica se consta na lista
+            foreach (string expr in list) // verifica se consta na lista
             {
-                if (text.Contains(expr)) // sucesso - a expressão hey chely foi dita
+                if (text.Contains(expr)) // sucesso - foi detetada a expressão no meio da string text
                 {
                     res = true;
                     break;
@@ -110,30 +121,22 @@ namespace cheli4.Models.Comercial
             return res;
         }
 
-
-        public bool IsVoiceCmd()
+        public int commandType(String text)
         {
-            return false;
+            if (checkCommand(text, this.nextList)) return 0;
+            else if (checkCommand(text, this.backList)) return 1;
+            else if (checkCommand(text, this.helpList)) return 2;
+            else if (checkCommand(text, this.repeatList)) return 3;
+            else if (checkCommand(text, this.expressionsList)) return 4;
+            else return -1;
         }
 
 
-        public void Dictate(string mensagem)
-        {
-
-        }
-
-
-        public string GetVoiceCmds()
-        {
-            return null;
-        }
-    
-
-    /// <summary>
-    /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
-    /// iniciliza as variáveis de instância associadas aos mesmos.
-    /// </summary>
-    private void initMicrosoftSpeechAPI()
+        /// <summary>
+        /// Configura a API do Microsoft Speech, validando a chave e região dos serviços, e 
+        /// iniciliza as variáveis de instância associadas aos mesmos.
+        /// </summary>
+        private void initMicrosoftSpeechAPI()
         {
             this.config = SpeechConfig.FromSubscription(Reconhecimento.key, Reconhecimento.region);
             this.synthesizer = new SpeechSynthesizer(this.config);
@@ -145,7 +148,8 @@ namespace cheli4.Models.Comercial
         /// </summary>
         /// <returns>Retorna a tarefa de reconhecimento de voz.</returns>
         private async Task RecognizeSpeechAsync()
-        {    
+        {
+
             // Starts speech recognition, and returns after a single utterance is recognized. The end of a
             // single utterance is determined by listening for silence at the end or until a maximum of 15
             // seconds of audio is processed.  The task returns the recognition text as result. 
@@ -158,23 +162,7 @@ namespace cheli4.Models.Comercial
             {
                 String text = result.Text;
                 this.result = text.ToLower();
-            }
-            else if (result.Reason == ResultReason.NoMatch)
-            {
-                Console.WriteLine($"NOMATCH: Speech could not be recognized.");
-            }
-            else if (result.Reason == ResultReason.Canceled)
-            {
-                var cancellation = CancellationDetails.FromResult(result);
-                Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
-
-                if (cancellation.Reason == CancellationReason.Error)
-                {
-                    Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
-                    Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
-                    Console.WriteLine($"CANCELED: Did you update the subscription info?");
-                }
-            }          
+            }      
         }
 
         /// <summary>
@@ -184,25 +172,30 @@ namespace cheli4.Models.Comercial
         /// <returns>Retorna a tarefa de conversão de voz.</returns>
         private async Task SynthesisToSpeakerAsync(String text)
         {
-            using (var result = await this.synthesizer.SpeakTextAsync(text))
-            {
-                if (result.Reason == ResultReason.SynthesizingAudioCompleted) // sucesso
-                {
-                    // certifica-se que tem tempo para ditar a expressão
-                    System.Threading.Thread.Sleep(text.Length * SPEAKER_SLEEP_TIME_MILLIS);
-                }
-                else if (result.Reason == ResultReason.Canceled)
-                {
-                    var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-                    Console.WriteLine($"CANCELED: Reason={cancellation.Reason}");
+            Thread.Sleep(Math.Min(text.Length * SPEAKER_SLEEP_TIME_MILLIS, MAX_MILLIS));
+            var result = await this.synthesizer.SpeakTextAsync(text);
+        }
 
-                    if (cancellation.Reason == CancellationReason.Error)
-                    {
-                        Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
-                        Console.WriteLine($"CANCELED: ErrorDetails=[{cancellation.ErrorDetails}]");
-                        Console.WriteLine($"CANCELED: Did you update the subscription info?");
-                    }
+        private void initCommandList(String fileName, ArrayList list)
+        {
+            try
+            {
+                StreamReader file = new StreamReader(fileName);
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    list.Add(line);
+                    // Console.WriteLine(line); // para debug no terminal
                 }
+                file.Close();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.StackTrace);
+                Console.Error.WriteLine("\nFicheiro com expressões \"" + fileName + "\" não encontrado, por favor crie-o usando o método LearnExpressions() da classe Reconhecimento");
+                Console.WriteLine("type enter to continue...");
+                Console.ReadLine();
+                Environment.Exit(1); // insucesso
             }
         }
 
@@ -211,26 +204,19 @@ namespace cheli4.Models.Comercial
         /// e faz o povoamento da mesma caso o ficheiro "hey-chely-list.txt" exista.
         /// </summary>
         /// <exception cref="Exception">lança uma exceção caso qualquer erro ocorra.</exception>
-        private void initHeyChelyList()
+        private void initCmdsList()
         {
-            this.heyChelyList = new ArrayList();
-            try {
-                StreamReader file = new StreamReader(HEY_CHELY_TXT);
-                string line;
-                while ((line = file.ReadLine()) != null)
-                {
-                    this.heyChelyList.Add(line);
-                    // Console.WriteLine(line); // para debug no terminal
-                }
-                file.Close();
-            } catch(Exception e) 
-            {
-                Console.Error.WriteLine(e.StackTrace);
-                Console.Error.WriteLine("\nFicheiro com expressões \"hey chely\" não encontrado, por favor crie-o usando o método LearnExpressions() da classe Reconhecimento");
-                Console.WriteLine("type enter to continue...");
-                Console.ReadLine();
-                Environment.Exit(1); // insucesso
-            }
+            this.nextList = new ArrayList();
+            this.backList = new ArrayList();
+            this.helpList = new ArrayList();
+            this.repeatList = new ArrayList();
+            this.expressionsList = new ArrayList();
+
+            this.initCommandList(NEXT_TXT, this.nextList);
+            this.initCommandList(BACK_TXT, this.backList);
+            this.initCommandList(HELP_TXT, this.helpList);
+            this.initCommandList(REPEAT_TXT, this.repeatList);
+            this.initCommandList(EXPRESSIONS_TXT, this.expressionsList);
         }
     }
 }

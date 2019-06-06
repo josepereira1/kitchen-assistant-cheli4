@@ -1,0 +1,77 @@
+﻿@model cheli4.Models.Comercial.Receita;
+@{
+    ViewData["Title"] = "Info";
+    TempData["realizar_receita_passo"] = 0;
+    TempData["realizar_receita_id"] = Model.id;
+}
+
+<div class="container">
+    <div class="row">
+        <img class="center-img" src="~/imagens/@Model.nomeFotoNormal" />
+    </div>
+</div>
+
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="~/imagens/relogio.png">  Setup time: @Model.duracao min</>
+            <ul>
+                <li>Name: @Model.nome</li>
+                <li>Type: @Model.tipo</li>
+                <li>Gastronomy: @Model.gastronomia</li>
+                @if (Model.disponivel == 1)
+                {
+                <li>Availability: yes</li>
+                }
+                else
+                {
+                <li>Availability: no</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>
+                Ingredients:
+            </h3>
+            <table class="table">
+                @foreach (var ri in Model.receitasIngredientes)
+                {
+                    <tr>
+                        <td>
+                            @ri.ingrediente.nome - @ri.ingrediente.calorias calories - @ri.quantidade g/ml/units
+                        </td>
+                    </tr>
+                }
+            </table>
+            <p></p>
+            <a class="btn btn-default btn-primary" asp-controller="RealizarReceitaView" asp-action="realizarReceita">Start Recipe</a>
+            <p></p>
+        </div>
+        <div class="col-sm">
+            <h4>
+                Instructions for using cheli4:
+            </h4>
+            <ul>
+                <li>
+                    HELP - Explain cheli4 commands;
+                </li>
+                <li>
+                    NEXT - Proceeds to next recipe step;
+                </li>
+                <li>
+                    BACK - Go back to the previous step;
+                </li>
+                <li>
+                    REPEAT - Repeat current step;
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
