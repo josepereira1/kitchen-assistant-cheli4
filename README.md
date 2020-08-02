@@ -1,2 +1,2 @@
 # kitchen-assistant-cheli4
-Project of Computer Labs 4
+Computer labs 4 project
